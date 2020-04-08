@@ -1,5 +1,5 @@
 {
-  "name": "travis-test",
+  "name": "covid19",
   "version": "1.0.0",
   "description": "",
   "main": "add.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/richarduggelberg/travis-test.git"
+    "url": "git+https://github.com/bwest-uggelberg/covid19.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/richarduggelberg/travis-test/issues"
+    "url": "https://github.com/bwest-uggelberg/covid19/issues"
   },
-  "homepage": "https://github.com/richarduggelberg/travis-test#readme",
+  "homepage": "https://github.com/bwest-uggelberg/covid19/blob/master/README.md",
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^7.1.1"
