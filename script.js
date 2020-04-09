@@ -1,9 +1,5 @@
 const fetch = require("node-fetch");
 
-function add(a, b) {
-	return a + b;
-}
-
 async function url_to_json(url) {
 	try {
     	const response = await fetch(url);
@@ -16,5 +12,5 @@ async function url_to_json(url) {
 }
 
 module.exports = {
-    add, url_to_json
+    url_to_json
 }
