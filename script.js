@@ -56,7 +56,10 @@ module.exports = {
 
 
 async function changeText() {
-	document.getElementById("data").innerHTML = "Data from JS";
+	try {
+		document.getElementById("data").innerHTML = "Data from JS";
+	}
+	catch (error) {}
 }
 
 changeText();
