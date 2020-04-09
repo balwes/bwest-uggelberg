@@ -1,6 +1,8 @@
+
 const fetch = require("node-fetch");
 const url_to_covid_data = "https://pomber.github.io/covid19/timeseries.json";
 const url_to_population_data = "https://restcountries.eu/rest/v2/name/sweden";
+
 
 async function url_to_json(url) {
 	try {
@@ -51,3 +53,13 @@ module.exports = {
     url_to_covid_data, url_to_population_data,
     url_to_json, get_sir_from_date, get_population
 }
+
+
+async function changeText() {
+	try {
+		document.getElementById("data").innerHTML = "Data from JS";
+	}
+	catch (error) {}
+}
+
+changeText();
