@@ -47,6 +47,16 @@ describe("get_sir_from_date", async function() {
             "recovered": 300,
         }
     ];
+    it("return [-1,-1,-1] if null is given", async function() {
+        var date = null;
+        var sir = main.get_sir_from_date(pop, dataset, date);
+        expect(sir).to.have.members([-1,-1,-1]);
+    });
+    it("return [-1,-1,-1] if an empty string is given", async function() {
+        var date = "";
+        var sir = main.get_sir_from_date(pop, dataset, date);
+        expect(sir).to.have.members([-1,-1,-1]);
+    });
     it("return [-1,-1,-1] from a non-existent date", async function() {
         var date = "2100-1-1";
         var sir = main.get_sir_from_date(pop, dataset, date);
