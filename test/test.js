@@ -58,12 +58,12 @@ describe("get_sir_from_date", function() {
     it("return [-1,-1,-1] from a non-existent date", async function() {
         var date = "2100-1-1";
         var sir = main.get_sir_from_date(pop, dataset, date);
-        expect(sir).to.be.equal([-1,-1,-1]);
+        expect(sir).to.have.members([-1,-1,-1]);
     });
     it("return [-1,-1,-1] from badly formatted date", async function() {
         var date = "2020-04-09"; // The JSON data does not pad zeroes to the month and day. Therefore this should fail.
         var sir = main.get_sir_from_date(pop, dataset, date);
-        expect(sir).to.be.equal([-1,-1,-1]);
+        expect(sir).to.have.members([-1,-1,-1]);
     });
     it("return SIR data from a correct date", async function() {
         var date = "2020-1-22";
