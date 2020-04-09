@@ -1,9 +1,5 @@
 const fetch = require("node-fetch");
 
-function add(a, b) {
-	return a + b;
-}
-
 async function url_to_json(url) {
 	try {
     	const response = await fetch(url);
@@ -22,7 +18,6 @@ async function url_to_json(url) {
  * Output: [S,I,R], or [-1,-1,-1] if the input was bad.
  */
 function get_sir_from_date(population, data_set, date) {
-	console.log(data_set.length);
     for (var i = 0; i < data_set.length; i++) {
 		let day_data = data_set[i];
         if (day_data.date == date) {
@@ -40,5 +35,5 @@ function get_sir_from_date(population, data_set, date) {
 }
 
 module.exports = {
-    add, url_to_json, get_sir_from_date
+    url_to_json, get_sir_from_date
 }

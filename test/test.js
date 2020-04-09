@@ -1,13 +1,7 @@
 
 var assert = require("assert");
 var expect = require("chai").expect;
-var main = require("../add.js");
-
-describe("add", function () {
-    it("description", function () {
-		expect(main.add(1,2)).to.be.equal(3);
-    });
-});
+var main = require("../script.js");
 
 describe("url_to_json", function () {
     it("return null in the case of a bad link", async function () {
