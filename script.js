@@ -34,6 +34,15 @@ function get_sir_from_date(population, data_set, date) {
     return [-1,-1,-1];
 }
 
+/*
+ * Input: parsed JSON data
+ * Output: the population, or -1 if anything goes wrong
+ */
+function get_population(data) {
+    // foooooooo
+    // BAR!
+}
+
 module.exports = {
-    url_to_json, get_sir_from_date
+    url_to_json, get_sir_from_date, get_population
 }

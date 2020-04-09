@@ -71,3 +71,27 @@ describe("get_sir_from_date", async function() {
         expect(sir[2]).to.be.equal(300);
     });
 });
+
+describe("get_population", async function() {
+
+    const json_data = [
+        {
+            name: "Sweden",
+            continent: "Europe",
+            population: 1337,
+        }
+    ];
+
+    it("return -1 given incorrect data", async function() {
+        const pop = main.get_population([{name: "Turkey"}]);
+        expect(pop).to.be.equal(-1);
+    });
+    it("return -1 given null data", async function() {
+        const pop = main.get_population(null);
+        expect(pop).to.be.equal(-1);
+    });
+    it("return the population given correct data", async function() {
+        const pop = main.get_population(json_data);
+        expect(pop).to.be.equal(1337);
+    });
+});
