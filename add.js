@@ -15,6 +15,10 @@ async function url_to_json(url) {
 	}
 }
 
+function get_sir_from_date(population, dataset, date) {
+	// foobar!
+}
+
 module.exports = {
-    add, url_to_json
+    add, url_to_json, get_sir_from_date
 }

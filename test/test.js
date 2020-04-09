@@ -36,3 +36,46 @@ describe("url_to_json", function () {
         expect(json.Sweden).to.not.be.equal(undefined);
     });
 });
+
+describe("get_sir_from_date", function() {
+    const pop = 1000
+    const dataset = {
+        "Sweden": [
+            {
+                "date": "2020-1-22",
+                "confirmed": 10,
+                "deaths": 20,
+                "recovered": 30,
+            },
+            {
+                "date": "2020-1-23",
+                "confirmed": 100,
+                "deaths": 200,
+                "recovered": 300,
+            }
+        ]
+    };
+    it("return [-1,-1,-1] from a non-existent date", async function() {
+        var date = "2100-1-1";
+        var sir = main.get_sir_from_date(pop, dataset, date);
+        expect(sir).to.be.equal([-1,-1,-1]);
+    });
+    it("return [-1,-1,-1] from badly formatted date", async function() {
+        var date = "2020-04-09"; // The JSON data does not pad zeroes to the month and day. Therefore this should fail.
+        var sir = main.get_sir_from_date(pop, dataset, date);
+        expect(sir).to.be.equal([-1,-1,-1]);
+    });
+    it("return SIR data from a correct date", async function() {
+        var date = "2020-1-22";
+        var sir = main.get_sir_from_date(pop, dataset, date);
+        expect(sir[0]).to.be.greaterThan(pop-10);
+        expect(sir[1]).to.be.greaterThan(10);
+        expect(sir[2]).to.be.greaterThan(30);
+        
+        var date = "2020-1-23";
+        var sir = main.get_sir_from_date(pop, dataset, date);
+        expect(sir[0]).to.be.equal(pop-100);
+        expect(sir[1]).to.be.equal(100);
+        expect(sir[2]).to.be.equal(300);
+    });
+});
