@@ -39,8 +39,10 @@ function get_sir_from_date(population, data_set, date) {
  * Output: the population, or -1 if anything goes wrong
  */
 function get_population(data) {
-    // foooooooo
-    // BAR!
+    if (data === null)  return -1;
+    if (data.length == 0)  return -1;
+    if (data[0].population === undefined)  return -1;
+    return data[0].population;
 }
 
 module.exports = {
