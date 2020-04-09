@@ -22,7 +22,7 @@ describe("url_to_json", function () {
         expect(json).to.be.equal(null);
     });
     it("return json data given a valid link to json data", async function () {
-        var link = "https://pomber.github.io/covid19/timeseries.json";
+        var link = main.url_to_covid_data;
         var json = await main.url_to_json(link);
         // Accessing a non-existent member should return undefined
         expect(json.foobar).to.be.equal(undefined);
