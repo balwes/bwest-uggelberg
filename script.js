@@ -1,4 +1,6 @@
+
 const fetch = require("node-fetch");
+
 
 async function url_to_json(url) {
 	try {
@@ -14,3 +16,10 @@ async function url_to_json(url) {
 module.exports = {
     url_to_json
 }
+
+
+async function changeText() {
+	document.getElementById("data").innerHTML = "Data from JS";
+}
+
+changeText();
