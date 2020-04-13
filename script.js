@@ -52,6 +52,35 @@ function get_sir_from_index(population, dataset, index) {
 }
 
 /*
+ * Returns an array of SIR data points between two dates (inclusive)
+ * Returns [] if
+ *     (1) any input is of the wrong type,
+ *     (2) any date doesn't exist, or
+ *     (3) if the start date comes after the end date.
+ */
+function get_sirs_between_dates(population, dataset, startDate, endDate) {
+    if (dataset == null) {
+        return [];
+    }
+    if (Date(startDate) > Date(endDate)) {
+        return [];
+    }
+    // Note: we assume that the dates come in chronological order in
+    // the JSON data, and this is true for the COVID-19 data.
+    var startIndex = get_index_of_date(dataset, startDate);
+    var endIndex   = get_index_of_date(dataset, endDate);
+    if (startIndex == -1 || endIndex == -1) {
+        return [];
+    }
+    var sirs = [];
+    for (var i = startIndex; i <= endIndex; i++) {
+        var sir = get_sir_from_index(population, dataset, i);
+        sirs.push(sir);
+    }
+    return sirs;
+}
+
+/*
  * Input: parsed JSON data
  * Output: the population, or -1 if anything goes wrong
  */
@@ -64,7 +93,8 @@ function get_population(data) {
 
 module.exports = {
     url_to_covid_data, url_to_population_data, url_to_json,
-    get_sir_from_index, get_population, get_index_of_date
+    get_sir_from_index, get_population, get_index_of_date,
+    get_sirs_between_dates
 }
 
 function makeGraph() {
