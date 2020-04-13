@@ -29,16 +29,17 @@ function get_index_of_date(dataset, date) {
 }
 
 /*
- * Return [S,I,R] from a given date. The date format is YYYY-MM-DD,
- * HOWEVER do not pad single-digit months and days with zeroes.
- * [-1,-1,-1] is returned if the input is bad.
+ * Return [S,I,R] from a given index.
+ * Output: [S,I,R], or [-1,-1,-1] if the input was bad.
  */
-function get_sir_from_date(population, dataset, date) {
-    var i = get_index_of_date(dataset, date)
-    if (i == -1) {
-        return [-1,-1,-1];
+function get_sir_from_index(population, dataset, index) {
+    if (typeof(population) != "number" || typeof(dataset) != "object" || typeof(index) != "number") {
+        return [-1,-1,-1]        
     }
-    let data = dataset[i];
+    if (index < 0 || index > dataset.length-1) {
+        return [-1,-1,-1]
+    }
+    let data = dataset[index];
     let sir = [];
     // susceptible
     sir[0] = population - data.confirmed - data.recovered;
@@ -62,7 +63,7 @@ function get_population(data) {
 
 module.exports = {
     url_to_covid_data, url_to_population_data, url_to_json,
-    get_sir_from_date, get_population, get_index_of_date
+    get_sir_from_index, get_population, get_index_of_date
 }
 
 
