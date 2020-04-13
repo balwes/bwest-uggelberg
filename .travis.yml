@@ -4,8 +4,7 @@ node_js:
 
 before_script:
   - npm install
-  - npm install chart.js --save
-
+  
 script:  
   - npm test
 
