@@ -43,26 +43,39 @@ async function url_to_json(url) {
 }
 
 /*
- * Below is the format of date. HOWEVER! The month and day is not
- * padded to be two digits.
- * Input: "YYYY-MM-DD"
- * Output: [S,I,R], or [-1,-1,-1] if the input was bad.
+ * Find where the date is inside the dataset.
+ * Returns -1 if not found or the input is wrong.
  */
-function get_sir_from_date(population, data_set, date) {
-    for (var i = 0; i < data_set.length; i++) {
-		let day_data = data_set[i];
-        if (day_data.date == date) {
-            let sir = [];
-            // susceptible
-            sir[0] = population - day_data.confirmed - day_data.recovered;
-            // infectious
-            sir[1] = day_data.confirmed;
-            // removed
-            sir[2] = day_data.recovered;
-            return sir;
+function get_index_of_date(dataset, date) {
+    for (var i = 0; i < dataset.length; i++) {
+        if (dataset[i].date == date) {
+            return i;
         }
     }
-    return [-1,-1,-1];
+    return -1;
+}
+
+/*
+ * Return [date,S,I,R] from a given index,
+ * or ["",-1,-1,-1] if the input was bad.
+ */
+function get_sir_from_index(population, dataset, index) {
+    if (typeof(population) != "number" || typeof(dataset) != "object" || typeof(index) != "number") {
+        return ["",-1,-1,-1]
+    }
+    if (index < 0 || index > dataset.length-1) {
+        return ["",-1,-1,-1]
+    }
+    let data = dataset[index];
+    let sir = [];
+    sir[0] = data.date;
+    // susceptible
+    sir[1] = population - data.confirmed - data.recovered;
+    // infectious
+    sir[2] = data.confirmed;
+    // removed
+    sir[3] = data.recovered;
+    return sir;
 }
 
 /*
@@ -77,14 +90,12 @@ function get_population(data) {
 }
 
 module.exports = {
-    url_to_covid_data, url_to_population_data,
-    url_to_json, get_sir_from_date, get_population
+    url_to_covid_data, url_to_population_data, url_to_json,
+    get_sir_from_index, get_population, get_index_of_date
 }
 
-async function drawGraph() {
-    try {
-        var ctx = document.getElementById('graph').getContext('2d');
-        var scatterChart = new Chart(ctx, {
+function makeGraph() {
+    var data = {
             type: 'scatter',
             data: {
                 datasets: [{
@@ -105,20 +116,22 @@ async function drawGraph() {
                 responsive: false,
                 maintainAspectRatio: true
             }
-        });
-    }
-    catch (error) {}
+        };
+    return data;
 }
 
 
-async function changeText() {
+async function updateHTML() {
 	try {
 		document.getElementById("data").innerHTML = "Data from JS";
+        var ctx = document.getElementById('graph').getContext('2d');
+        var data = makeGraph();
+        var scatterChart = new Chart(ctx, data);
+
 	}
 	catch (error) {}
 }
 
-drawGraph();
-changeText();
+updateHTML();
 
 },{"node-fetch":1}]},{},[2]);
