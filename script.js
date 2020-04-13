@@ -29,26 +29,24 @@ function get_index_of_date(dataset, date) {
 }
 
 /*
- * Below is the format of date. HOWEVER! The month and day is not
- * padded to be two digits.
- * Input: "YYYY-MM-DD"
- * Output: [S,I,R], or [-1,-1,-1] if the input was bad.
+ * Return [S,I,R] from a given date. The date format is YYYY-MM-DD,
+ * HOWEVER do not pad single-digit months and days with zeroes.
+ * [-1,-1,-1] is returned if the input is bad.
  */
-function get_sir_from_date(population, data_set, date) {
-    for (var i = 0; i < data_set.length; i++) {
-		let day_data = data_set[i];
-        if (day_data.date == date) {
-            let sir = [];
-            // susceptible
-            sir[0] = population - day_data.confirmed - day_data.recovered;
-            // infectious
-            sir[1] = day_data.confirmed;
-            // removed
-            sir[2] = day_data.recovered;
-            return sir;
-        }
+function get_sir_from_date(population, dataset, date) {
+    var i = get_index_of_date(dataset, date)
+    if (i == -1) {
+        return [-1,-1,-1];
     }
-    return [-1,-1,-1];
+    let data = dataset[i];
+    let sir = [];
+    // susceptible
+    sir[0] = population - data.confirmed - data.recovered;
+    // infectious
+    sir[1] = data.confirmed;
+    // removed
+    sir[2] = data.recovered;
+    return sir;
 }
 
 /*
