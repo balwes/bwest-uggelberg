@@ -67,6 +67,35 @@ module.exports = {
     get_sir_from_index, get_population, get_index_of_date
 }
 
+async function drawGraph() {
+    try {
+        var ctx = document.getElementById('graph').getContext('2d');
+        var scatterChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Scatter Dataset',
+                    data: [{
+                        x: -10,
+                        y: 0
+                    }, {
+                        x: 0,
+                        y: 10
+                    }, {
+                        x: 10,
+                        y: 5
+                    }]
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: true
+            }
+        });
+    }
+    catch (error) {}
+}
+
 
 async function changeText() {
 	try {
@@ -75,4 +104,5 @@ async function changeText() {
 	catch (error) {}
 }
 
+drawGraph();
 changeText();
