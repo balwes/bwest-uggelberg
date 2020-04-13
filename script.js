@@ -16,6 +16,19 @@ async function url_to_json(url) {
 }
 
 /*
+ * Find where the date is inside the dataset.
+ * Returns -1 if not found or the input is wrong.
+ */
+function get_index_of_date(dataset, date) {
+    for (var i = 0; i < dataset.length; i++) {
+        if (dataset[i].date == date) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/*
  * Below is the format of date. HOWEVER! The month and day is not
  * padded to be two digits.
  * Input: "YYYY-MM-DD"
@@ -50,8 +63,8 @@ function get_population(data) {
 }
 
 module.exports = {
-    url_to_covid_data, url_to_population_data,
-    url_to_json, get_sir_from_date, get_population
+    url_to_covid_data, url_to_population_data, url_to_json,
+    get_sir_from_date, get_population, get_index_of_date
 }
 
 
