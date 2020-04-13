@@ -15,6 +15,10 @@ async function url_to_json(url) {
 	}
 }
 
+function get_index_of_date(dataset, date) {
+    //
+}
+
 /*
  * Below is the format of date. HOWEVER! The month and day is not
  * padded to be two digits.
@@ -50,8 +54,8 @@ function get_population(data) {
 }
 
 module.exports = {
-    url_to_covid_data, url_to_population_data,
-    url_to_json, get_sir_from_date, get_population
+    url_to_covid_data, url_to_population_data, url_to_json,
+    get_sir_from_date, get_population, get_index_of_date
 }
 
 

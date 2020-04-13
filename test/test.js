@@ -31,6 +31,54 @@ describe("url_to_json", function () {
     });
 });
 
+describe("get_index_of_date", async function() {
+    const dataset = [
+        {
+            "date": "2020-1-22",
+            "confirmed": 1,
+            "deaths": 2,
+            "recovered": 3,
+        },
+        {
+            "date": "2020-4-13",
+            "confirmed": 4,
+            "deaths": 5,
+            "recovered": 6,
+        },
+        {
+            "date": "2030-1-5",
+            "confirmed": 7,
+            "deaths": 8,
+            "recovered": 9,
+        }
+    ];
+    it("a valid date returns a valid index in the dataset", async function() {
+        var date = "2030-1-5";
+        var i = main.get_index_of_date(dataset, date);
+        expect(i).to.be.equal(2);
+    });
+    it("an invalid date returns an index of -1", async function() {
+        var date = "2010-1-5";
+        var i = main.get_index_of_date(dataset, date);
+        expect(i).to.be.equal(-1);
+    });
+    it("an empty string returns an index of -1", async function() {
+        var date = "";
+        var i = main.get_index_of_date(dataset, date);
+        expect(i).to.be.equal(-1);
+    });
+    it("giving null returns an index of -1", async function() {
+        var date = null;
+        var i = main.get_index_of_date(dataset, date);
+        expect(i).to.be.equal(-1);
+    });
+    it("a non-string date returns an index of -1", async function() {
+        var date = 100;
+        var i = main.get_index_of_date(dataset, date);
+        expect(i).to.be.equal(-1);
+    });
+});
+
 describe("get_sir_from_date", async function() {
     const pop = 1000;
     const dataset = [
