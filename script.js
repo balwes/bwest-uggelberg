@@ -67,10 +67,8 @@ module.exports = {
     get_sir_from_index, get_population, get_index_of_date
 }
 
-async function drawGraph() {
-    try {
-        var ctx = document.getElementById('graph').getContext('2d');
-        var scatterChart = new Chart(ctx, {
+function makeGraph() {
+    var data = {
             type: 'scatter',
             data: {
                 datasets: [{
@@ -91,18 +89,20 @@ async function drawGraph() {
                 responsive: false,
                 maintainAspectRatio: true
             }
-        });
-    }
-    catch (error) {}
+        };
+    return data;
 }
 
 
-async function changeText() {
+async function updateHTML() {
 	try {
 		document.getElementById("data").innerHTML = "Data from JS";
+        var ctx = document.getElementById('graph').getContext('2d');
+        var data = makeGraph();
+        var scatterChart = new Chart(ctx, data);
+
 	}
 	catch (error) {}
 }
 
-drawGraph();
-changeText();
+updateHTML();
