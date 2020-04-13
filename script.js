@@ -29,24 +29,25 @@ function get_index_of_date(dataset, date) {
 }
 
 /*
- * Return [S,I,R] from a given index.
- * Output: [S,I,R], or [-1,-1,-1] if the input was bad.
+ * Return [date,S,I,R] from a given index,
+ * or ["",-1,-1,-1] if the input was bad.
  */
 function get_sir_from_index(population, dataset, index) {
     if (typeof(population) != "number" || typeof(dataset) != "object" || typeof(index) != "number") {
-        return [-1,-1,-1]        
+        return ["",-1,-1,-1]
     }
     if (index < 0 || index > dataset.length-1) {
-        return [-1,-1,-1]
+        return ["",-1,-1,-1]
     }
     let data = dataset[index];
     let sir = [];
+    sir[0] = data.date;
     // susceptible
-    sir[0] = population - data.confirmed - data.recovered;
+    sir[1] = population - data.confirmed - data.recovered;
     // infectious
-    sir[1] = data.confirmed;
+    sir[2] = data.confirmed;
     // removed
-    sir[2] = data.recovered;
+    sir[3] = data.recovered;
     return sir;
 }
 
