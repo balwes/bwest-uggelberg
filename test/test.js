@@ -101,7 +101,7 @@ describe("get_sir_from_index", async function() {
             "recovered": 3000,
         }
     ];
-    it("return [-1,-1,-1] for an index of -1", async function() {
+    it("return [-1,-1,-1] for an index that's too small", async function() {
         var sir = main.get_sir_from_index(pop, dataset, -1);
         expect(sir).to.have.members([-1,-1,-1]);
     });
@@ -109,7 +109,7 @@ describe("get_sir_from_index", async function() {
         var sir = main.get_sir_from_index(pop, dataset, "hello world");
         expect(sir).to.have.members([-1,-1,-1]);
     });
-    it("return [-1,-1,-1] from an index that's out of range", async function() {
+    it("return [-1,-1,-1] from an index that's too big", async function() {
         var sir = main.get_sir_from_index(pop, dataset, 1000);
         expect(sir).to.have.members([-1,-1,-1]);
     });
