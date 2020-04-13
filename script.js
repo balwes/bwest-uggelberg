@@ -51,6 +51,10 @@ function get_sir_from_index(population, dataset, index) {
     return sir;
 }
 
+function get_sirs_between_dates(population, dataset, startDate, endDate) {
+    //
+}
+
 /*
  * Input: parsed JSON data
  * Output: the population, or -1 if anything goes wrong
@@ -64,7 +68,8 @@ function get_population(data) {
 
 module.exports = {
     url_to_covid_data, url_to_population_data, url_to_json,
-    get_sir_from_index, get_population, get_index_of_date
+    get_sir_from_index, get_population, get_index_of_date,
+    get_sirs_between_dates
 }
 
 async function drawGraph() {
