@@ -31,7 +31,6 @@ function get_index_of_date(dataset, date) {
 /*
  * Return [S,I,R] from a given index.
  * Output: [S,I,R], or [-1,-1,-1] if the input was bad.
- * 
  */
 function get_sir_from_index(population, dataset, index) {
     //

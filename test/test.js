@@ -102,26 +102,30 @@ describe("get_sir_from_index", async function() {
         }
     ];
     it("return [-1,-1,-1] for an index of -1", async function() {
-        var index = -1;
-        var sir = main.get_sir_from_index(pop, dataset, index);
+        var sir = main.get_sir_from_index(pop, dataset, -1);
         expect(sir).to.have.members([-1,-1,-1]);
     });
     it("return [-1,-1,-1] for an index of wrong type", async function() {
-        var index = "hello world";
-        var sir = main.get_sir_from_index(pop, dataset, index);
+        var sir = main.get_sir_from_index(pop, dataset, "hello world");
         expect(sir).to.have.members([-1,-1,-1]);
     });
     it("return [-1,-1,-1] from an index that's out of range", async function() {
-        var index = 1000;
-        var sir = main.get_sir_from_index(pop, dataset, index);
+        var sir = main.get_sir_from_index(pop, dataset, 1000);
         expect(sir).to.have.members([-1,-1,-1]);
     });
-    it("return SIR data from a correct index", async function() {
-        var index = 1;
-        var sir = main.get_sir_from_index(pop, dataset, index);
+    it("return SIR data from correct input", async function() {
+        var sir = main.get_sir_from_index(pop, dataset, 1);
         expect(sir[0]).to.be.equal(pop-100-300);
         expect(sir[1]).to.be.equal(100);
         expect(sir[2]).to.be.equal(300);
+    });
+    it("return [-1,-1,-1] from a population of wrong type", async function() {
+        var sir = main.get_sir_from_index("population string", dataset, 1);
+        expect(sir).to.have.members([-1,-1,-1]);
+    });
+    it("return [-1,-1,-1] from a dataset of wrong type", async function() {
+        var sir = main.get_sir_from_index(pop, "wrong type", 1);
+        expect(sir).to.have.members([-1,-1,-1]);
     });
 });
 
