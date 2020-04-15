@@ -89,49 +89,42 @@ function get_population(data) {
     return data[0].population;
 }
 
-module.exports = {
-    url_to_covid_data, url_to_population_data, url_to_json,
-    get_sir_from_index, get_population, get_index_of_date
-}
-
-function makeGraph() {
-    var data = {
-            type: 'scatter',
-            data: {
-                datasets: [{
-                    label: 'Scatter Dataset',
-                    data: [{
-                        x: -10,
-                        y: 0
-                    }, {
-                        x: 0,
-                        y: 10
-                    }, {
-                        x: 10,
-                        y: 5
-                    }]
-                }]
-            },
-            options: {
-                responsive: false,
-                maintainAspectRatio: true
-            }
-        };
+function make_chart() {
+    const data = {
+        type: 'line',
+        data: {
+            labels: ["2020-01-22", "2020-01-22", "2020-01-22"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3]
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: true
+        }
+    };
     return data;
 }
 
 
 async function updateHTML() {
-	try {
-		document.getElementById("data").innerHTML = "Data from JS";
+    try {
+        document.getElementById("data").innerHTML = "Data from JS";
         var ctx = document.getElementById('graph').getContext('2d');
-        var data = makeGraph();
+        var data = make_chart();
         var scatterChart = new Chart(ctx, data);
 
-	}
-	catch (error) {}
+    }
+    catch (error) {}
+}
+
+module.exports = {
+    url_to_covid_data, url_to_population_data, url_to_json,
+    get_sir_from_index, get_population, get_index_of_date
 }
 
 updateHTML();
+
 
 },{"node-fetch":1}]},{},[2]);

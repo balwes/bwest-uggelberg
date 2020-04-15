@@ -153,3 +153,70 @@ describe("get_population", async function() {
         expect(pop).to.be.equal(1337);
     });
 });
+
+describe("make_chart", function() {
+
+    const sir_data = [
+        ["2020-1-22", 100,10,1],
+        ["2020-1-22", 90,20,1],
+        ["2020-1-22", 70,30,11]
+    ];
+
+    const line_chart_susceptible = {
+        type: 'line',
+        data: {
+            labels: ["2020-01-22", "2020-01-23", "2020-01-24"],
+            datasets: [{
+                label: 'label',
+                data: [100, 90, 70]
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: true
+        }
+    };
+
+    const line_chart_infected = {
+        type: 'line',
+        data: {
+            labels: ["2020-01-22", "2020-01-23", "2020-01-24"],
+            datasets: [{
+                label: 'label',
+                data: [10, 20, 30]
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: true
+        }
+    };
+
+    const line_chart_removed = {
+        type: 'line',
+        data: {
+            labels: ["2020-01-22", "2020-01-23", "2020-01-24"],
+            datasets: [{
+                label: 'label',
+                data: [1,1,11]
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: true
+        }
+    };
+
+    it("return line chart of susceptible", function() {
+        const chart = main.make_chart(sir_data, 1);
+        expect(line_chart_susceptible).to.deep.equal(chart);
+    });
+    it("return line chart of infected", function() {
+        const chart = main.make_chart(sir_data, 2);
+        expect(line_chart_infected).to.deep.equal(chart);
+    });
+    it("return line chart of removed", function() {
+        const chart = main.make_chart(sir_data, 3);
+        expect(line_chart_removed).to.deep.equal(chart);
+    });
+});
