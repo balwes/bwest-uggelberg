@@ -253,3 +253,85 @@ describe("get_population", async function() {
         expect(pop).to.be.equal(1337);
     });
 });
+
+describe("make_chart", function() {
+
+    const sir_data = [
+        ["2020-1-22", 100,10,1],
+        ["2020-1-23", 90,20,1],
+        ["2020-1-24", 70,30,11]
+    ];
+
+    const line_chart_susceptible = {
+        type: 'line',
+        data: {
+            labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
+            datasets: [{
+                label: 1,
+                data: [100, 90, 70]
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: true
+        }
+    };
+
+    const line_chart_infected = {
+        type: 'line',
+        data: {
+            labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
+            datasets: [{
+                label: 2,
+                data: [10, 20, 30]
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: true
+        }
+    };
+
+    const line_chart_removed = {
+        type: 'line',
+        data: {
+            labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
+            datasets: [{
+                label: 3,
+                data: [1,1,11]
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: true
+        }
+    };
+
+    it("return an object", function() {
+        const chart = main.make_chart(sir_data, 1);
+        expect(chart).to.be.an('object');
+    });
+
+    it("return null if non-existent category is called", function() {
+        const chart = main.make_chart(sir_data, 4);
+        expect(chart).to.be.a('null');
+    });
+
+    it("return null if non-existent category is called", function() {
+        const chart = main.make_chart(sir_data, 0);
+        expect(chart).to.be.a('null');
+    });
+
+    it("return line chart of susceptible", function() {
+        const chart = main.make_chart(sir_data, 1);
+        expect(line_chart_susceptible).to.deep.equal(chart);
+    });
+    it("return line chart of infected", function() {
+        const chart = main.make_chart(sir_data, 2);
+        expect(line_chart_infected).to.deep.equal(chart);
+    });
+    it("return line chart of removed", function() {
+        const chart = main.make_chart(sir_data, 3);
+        expect(line_chart_removed).to.deep.equal(chart);
+    });
+});
