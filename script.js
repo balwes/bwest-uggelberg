@@ -98,9 +98,11 @@ function get_population(data) {
 }
 
 function make_chart(sir_data, category) {
+
     if(sir_data === null) {
         return null;
     }
+
     if(category < 1 || category > 3) {
         return null;
     }
@@ -108,6 +110,7 @@ function make_chart(sir_data, category) {
     var dates = [];
     var data = [];
 
+    var i;
     for(i = 0; i < sir_data.length; i++) {
         dates.push(sir_data[i][0]);
         data.push(sir_data[i][category]);
@@ -135,8 +138,18 @@ function make_chart(sir_data, category) {
 async function updateHTML() {
     try {
         document.getElementById("data").innerHTML = "Data from JS";
-        var ctx = document.getElementById('graph').getContext('2d');
-        var chart = make_chart();
+        var ctx = document.getElementById('chart').getContext('2d');
+
+        var pop = 10000000
+        var json = await url_to_json(url_to_covid_data);
+        var dataset = json.Sweden;
+        var startDate = "2020-1-30";
+        var endDate = "2020-3-30";
+
+        var sir_data = get_sirs_between_dates(pop, dataset, startDate, endDate);
+
+        var chart = make_chart(sir_data, 2);
+
         var lineChart = new Chart(ctx, chart);
 
     }
@@ -148,6 +161,7 @@ module.exports = {
     get_sir_from_index, get_population, get_index_of_date,
     make_chart, get_sirs_between_dates
 }
+
 
 updateHTML();
 
