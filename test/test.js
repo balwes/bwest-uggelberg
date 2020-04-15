@@ -51,7 +51,11 @@ describe("url_to_json", function () {
     });
     it("return null given a valid link to non-json data", async function () {
         var link = "https://duckduckgo.com/";
-        var json = await main.url_to_json("link");
+        var json = await main.url_to_json(link);
+        expect(json).to.be.equal(null);
+    });
+    it("return null for wrong input type", async function () {
+        var json = await main.url_to_json(1234);
         expect(json).to.be.equal(null);
     });
     it("return json data given a valid link to json data", async function () {
@@ -90,6 +94,16 @@ describe("get_index_of_date", async function() {
         var i = main.get_index_of_date(dataset, date);
         expect(i).to.be.equal(-1);
     });
+    it("a dataset of wrong type returns an index of -1", async function() {
+        var date = "2010-1-5";
+        var i = main.get_index_of_date(1234, date);
+        expect(i).to.be.equal(-1);
+    });
+    it("a null dataset returns an index of -1", async function() {
+        var date = "2010-1-5";
+        var i = main.get_index_of_date(null, date);
+        expect(i).to.be.equal(-1);
+    });
 });
 
 describe("get_sir_from_index", async function() {
@@ -119,6 +133,16 @@ describe("get_sir_from_index", async function() {
     });
     it("return [\"\",-1,-1,-1] from a dataset of wrong type", async function() {
         var sir = main.get_sir_from_index(pop, "wrong type", 1);
+        expect(sir).to.have.members(["",-1,-1,-1]);
+    });
+    it("return [\"\",-1,-1,-1] for any null input", async function() {
+        var sir = main.get_sir_from_index(null, dataset, 3);
+        expect(sir).to.have.members(["",-1,-1,-1]);
+
+        sir = main.get_sir_from_index(pop, null, 3);
+        expect(sir).to.have.members(["",-1,-1,-1]);
+
+        sir = main.get_sir_from_index(pop, dataset, null);
         expect(sir).to.have.members(["",-1,-1,-1]);
     });
 });
@@ -218,6 +242,10 @@ describe("get_population", async function() {
     });
     it("return -1 given null data", async function() {
         const pop = main.get_population(null);
+        expect(pop).to.be.equal(-1);
+    });
+    it("return -1 given wrong input type data", async function() {
+        const pop = main.get_population("WRONG!");
         expect(pop).to.be.equal(-1);
     });
     it("return the population given correct data", async function() {
