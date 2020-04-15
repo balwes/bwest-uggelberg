@@ -212,6 +212,16 @@ describe("make_chart", function() {
         expect(chart).to.be.an('object');
     });
 
+    it("return null if non-existent category is called", function() {
+        const chart = main.make_chart(sir_data, 4);
+        expect(chart).to.be.a('null');
+    });
+
+    it("return null if non-existent category is called", function() {
+        const chart = main.make_chart(sir_data, 0);
+        expect(chart).to.be.a('null');
+    });
+
     it("return line chart of susceptible", function() {
         const chart = main.make_chart(sir_data, 1);
         expect(line_chart_susceptible).to.deep.equal(chart);

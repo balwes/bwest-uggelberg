@@ -62,7 +62,7 @@ function get_population(data) {
     return data[0].population;
 }
 
-function make_chart() {
+function make_chart(sir_data, category) {
     const data = {
         type: 'line',
         data: {
@@ -86,7 +86,7 @@ async function updateHTML() {
         document.getElementById("data").innerHTML = "Data from JS";
         var ctx = document.getElementById('graph').getContext('2d');
         var data = make_chart();
-        var scatterChart = new Chart(ctx, data);
+        var lineChart = new Chart(ctx, data);
 
     }
     catch (error) {}
