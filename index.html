@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 
 <html> 
-	<head> 
-		<title>Modeling COVID-19 in Sweden</title> 
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/main.css">    
+		<title>Modeling COVID-19 in Sweden</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-		<meta charset="utf-8" />
-		<!--<script type="text/javascript" src="main.js"></script> -->
 	</head>
 	<body>
-		<p id="title">Data:</p>
-		<p id="data"> No Data</p>
-		<canvas id="chart" width="400" height="400"></canvas>
+		<header id="hero-area">    
+			<div class="row justify-content-md-center">
+				<h1>Modeling COVID-19 in Sweden</h1>
+			</div>
+		</header>
+
+		<section class="disclaimer">
+			<div class="container col-xs-12 text-center">
+				<h1 class="no-padding disclaimer-text">This website is for educational purposes. It is not a substitute for information from health organizations.</h1>
+			</div>
+		</section>
+
+		<section class="graph">
+			<div class="container text-center graph-figure">
+				<canvas id="chart" width="400" height="400"></canvas>
+				<p></p>
+				<p id="title">Data:</p>
+				<p id="data">No Data</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</div>
+		</section>
+
+		<footer>
+			<div class="row extend">
+				<div class="col-lg-6 col-sm-6 col-xs-12">
+					<div class="copyright">
+						<p>Website template by <a rel="nofollow" href="https://uideck.com">UIdeck</a></p>
+					</div>
+				</div>  
+			</div>
+		</footer>
 		<script type="module" src="browserify.js"></script>
 	</body>
 </html>
