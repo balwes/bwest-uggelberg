@@ -78,7 +78,6 @@ function make_chart(sir_data, category) {
         data.push(sir_data[i][category]);
     }
 
-
     var chart = {
         type: 'line',
         data: {
@@ -102,8 +101,8 @@ async function updateHTML() {
     try {
         document.getElementById("data").innerHTML = "Data from JS";
         var ctx = document.getElementById('graph').getContext('2d');
-        var data = make_chart();
-        var lineChart = new Chart(ctx, data);
+        var chart = make_chart();
+        var lineChart = new Chart(ctx, chart);
 
     }
     catch (error) {}
