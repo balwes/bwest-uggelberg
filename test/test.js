@@ -158,16 +158,16 @@ describe("make_chart", function() {
 
     const sir_data = [
         ["2020-1-22", 100,10,1],
-        ["2020-1-22", 90,20,1],
-        ["2020-1-22", 70,30,11]
+        ["2020-1-23", 90,20,1],
+        ["2020-1-24", 70,30,11]
     ];
 
     const line_chart_susceptible = {
         type: 'line',
         data: {
-            labels: ["2020-01-22", "2020-01-23", "2020-01-24"],
+            labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
             datasets: [{
-                label: 'label',
+                label: 1,
                 data: [100, 90, 70]
             }]
         },
@@ -180,9 +180,9 @@ describe("make_chart", function() {
     const line_chart_infected = {
         type: 'line',
         data: {
-            labels: ["2020-01-22", "2020-01-23", "2020-01-24"],
+            labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
             datasets: [{
-                label: 'label',
+                label: 2,
                 data: [10, 20, 30]
             }]
         },
@@ -195,9 +195,9 @@ describe("make_chart", function() {
     const line_chart_removed = {
         type: 'line',
         data: {
-            labels: ["2020-01-22", "2020-01-23", "2020-01-24"],
+            labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
             datasets: [{
-                label: 'label',
+                label: 3,
                 data: [1,1,11]
             }]
         },

@@ -63,13 +63,29 @@ function get_population(data) {
 }
 
 function make_chart(sir_data, category) {
-    const data = {
+    if(sir_data === null) {
+        return null;
+    }
+    if(category < 1 || category > 3) {
+        return null;
+    }
+
+    var dates = [];
+    var data = [];
+
+    for(i = 0; i < sir_data.length; i++) {
+        dates.push(sir_data[i][0]);
+        data.push(sir_data[i][category]);
+    }
+
+
+    var chart = {
         type: 'line',
         data: {
-            labels: ["2020-01-22", "2020-01-22", "2020-01-22"],
+            labels: dates,
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3]
+                label: category,
+                data: data
             }]
         },
         options: {
@@ -77,7 +93,8 @@ function make_chart(sir_data, category) {
             maintainAspectRatio: true
         }
     };
-    return data;
+
+    return chart;
 }
 
 
@@ -94,7 +111,8 @@ async function updateHTML() {
 
 module.exports = {
     url_to_covid_data, url_to_population_data, url_to_json,
-    get_sir_from_index, get_population, get_index_of_date
+    get_sir_from_index, get_population, get_index_of_date,
+    make_chart
 }
 
 updateHTML();
