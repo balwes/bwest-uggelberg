@@ -20,6 +20,9 @@ async function url_to_json(url) {
  * Returns -1 if not found or the input is wrong.
  */
 function get_index_of_date(dataset, date) {
+    if (dataset == null) {
+        return -1;
+    }
     for (var i = 0; i < dataset.length; i++) {
         if (dataset[i].date == date) {
             return i;
@@ -34,6 +37,9 @@ function get_index_of_date(dataset, date) {
  */
 function get_sir_from_index(population, dataset, index) {
     if (typeof(population) != "number" || typeof(dataset) != "object" || typeof(index) != "number") {
+        return ["",-1,-1,-1]
+    }
+    if (dataset == null) {
         return ["",-1,-1,-1]
     }
     if (index < 0 || index > dataset.length-1) {
