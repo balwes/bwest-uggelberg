@@ -53,7 +53,7 @@ function get_sir_from_index(population, dataset, index) {
     // infectious
     sir[2] = data.confirmed;
     // removed
-    sir[3] = data.recovered;
+    sir[3] = data.recovered + data.deaths;
     return sir;
 }
 
