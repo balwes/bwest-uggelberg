@@ -3,6 +3,39 @@ var assert = require("assert");
 var expect = require("chai").expect;
 var main = require("../script.js");
 
+const dataset = [
+    {
+        "date": "2020-1-22",
+        "confirmed": 1,
+        "deaths": 2,
+        "recovered": 3,
+    },
+    {
+        "date": "2020-1-23",
+        "confirmed": 4,
+        "deaths": 5,
+        "recovered": 6,
+    },
+    {
+        "date": "2020-1-24",
+        "confirmed": 7,
+        "deaths": 8,
+        "recovered": 9,
+    },
+    {
+        "date": "2020-1-25",
+        "confirmed": 10,
+        "deaths": 11,
+        "recovered": 12,
+    },
+    {
+        "date": "2020-1-26",
+        "confirmed": 13,
+        "deaths": 14,
+        "recovered": 15,
+    }
+];
+
 describe("url_to_json", function () {
     it("return null in the case of a bad link", async function () {
         var json = await main.url_to_json("bad link");
@@ -32,30 +65,10 @@ describe("url_to_json", function () {
 });
 
 describe("get_index_of_date", async function() {
-    const dataset = [
-        {
-            "date": "2020-1-22",
-            "confirmed": 1,
-            "deaths": 2,
-            "recovered": 3,
-        },
-        {
-            "date": "2020-4-13",
-            "confirmed": 4,
-            "deaths": 5,
-            "recovered": 6,
-        },
-        {
-            "date": "2030-1-5",
-            "confirmed": 7,
-            "deaths": 8,
-            "recovered": 9,
-        }
-    ];
     it("a valid date returns a valid index in the dataset", async function() {
-        var date = "2030-1-5";
+        var date = "2020-1-26";
         var i = main.get_index_of_date(dataset, date);
-        expect(i).to.be.equal(2);
+        expect(i).to.be.equal(4);
     });
     it("an invalid date returns an index of -1", async function() {
         var date = "2010-1-5";
@@ -81,26 +94,6 @@ describe("get_index_of_date", async function() {
 
 describe("get_sir_from_index", async function() {
     const pop = 1000;
-    const dataset = [
-        {
-            "date": "2020-1-22",
-            "confirmed": 10,
-            "deaths": 20,
-            "recovered": 30,
-        },
-        {
-            "date": "2020-1-23",
-            "confirmed": 100,
-            "deaths": 200,
-            "recovered": 300,
-        },
-        {
-            "date": "2030-4-13",
-            "confirmed": 1000,
-            "deaths": 2000,
-            "recovered": 3000,
-        }
-    ];
     it("return [\"\",-1,-1,-1] for an index that's too small", async function() {
         var sir = main.get_sir_from_index(pop, dataset, -1);
         expect(sir).to.have.members(["",-1,-1,-1]);
@@ -114,11 +107,11 @@ describe("get_sir_from_index", async function() {
         expect(sir).to.have.members(["",-1,-1,-1]);
     });
     it("return SIR data from correct input", async function() {
-        var sir = main.get_sir_from_index(pop, dataset, 1);
-        expect(sir[0]).to.be.equal("2020-1-23");
-        expect(sir[1]).to.be.equal(pop-100-300);
-        expect(sir[2]).to.be.equal(100);
-        expect(sir[3]).to.be.equal(300);
+        var sir = main.get_sir_from_index(pop, dataset, 3);
+        expect(sir[0]).to.be.equal("2020-1-25");
+        expect(sir[1]).to.be.equal(pop-10-12);
+        expect(sir[2]).to.be.equal(10);
+        expect(sir[3]).to.be.equal(12);
     });
     it("return [\"\",-1,-1,-1] from a population of wrong type", async function() {
         var sir = main.get_sir_from_index("population string", dataset, 1);
@@ -131,38 +124,6 @@ describe("get_sir_from_index", async function() {
 });
 
 describe("get_sirs_between_dates", async function() {
-    const dataset = [
-        {
-            "date": "2020-1-22",
-            "confirmed": 1,
-            "deaths": 2,
-            "recovered": 3,
-        },
-        {
-            "date": "2020-1-23",
-            "confirmed": 4,
-            "deaths": 5,
-            "recovered": 6,
-        },
-        {
-            "date": "2020-1-24",
-            "confirmed": 7,
-            "deaths": 8,
-            "recovered": 9,
-        },
-        {
-            "date": "2020-1-25",
-            "confirmed": 10,
-            "deaths": 11,
-            "recovered": 12,
-        },
-        {
-            "date": "2020-1-26",
-            "confirmed": 13,
-            "deaths": 14,
-            "recovered": 15,
-        }
-    ];
     it("[] is returned when any input is of the wrong type", async function() {
         var sirs = main.get_sirs_between_dates("wrong type", {}, "2020-4-1", "2020-4-2");
         expect(sirs).to.be.empty;
