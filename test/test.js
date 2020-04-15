@@ -207,6 +207,11 @@ describe("make_chart", function() {
         }
     };
 
+    it("return an object", function() {
+        const chart = main.make_chart(sir_data, 1);
+        expect(chart).to.be.an('object');
+    });
+
     it("return line chart of susceptible", function() {
         const chart = main.make_chart(sir_data, 1);
         expect(line_chart_susceptible).to.deep.equal(chart);
