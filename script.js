@@ -97,23 +97,42 @@ function get_population(data) {
     return data[0].population;
 }
 
-function make_chart(sir_data, category) {
+function make_chart(sir_data, category, color) {
 
     if(sir_data === null) {
         return null;
     }
 
-    if(category < 1 || category > 3) {
+    if(category != "susceptible" 
+        && category != "infected" 
+        && category != "removed") {
+        return null;
+    }
+
+    if(color != "red" 
+        && color != "blue" 
+        && color != "green") {
         return null;
     }
 
     var dates = [];
     var data = [];
 
+    var sir_pos;
+    if(category === "susceptible") {
+        sir_pos = 1;
+    }
+    if(category === "infected") {
+        sir_pos = 2;
+    }
+    if(category === "removed") {
+        sir_pos = 3;
+    }
+
     var i;
     for(i = 0; i < sir_data.length; i++) {
         dates.push(sir_data[i][0]);
-        data.push(sir_data[i][category]);
+        data.push(sir_data[i][sir_pos]);
     }
 
     var chart = {
@@ -122,12 +141,30 @@ function make_chart(sir_data, category) {
             labels: dates,
             datasets: [{
                 label: category,
+                borderColor: color, 
                 data: data
             }]
         },
         options: {
             responsive: false,
-            maintainAspectRatio: true
+            maintainAspectRatio: true,
+            legend: {
+                labels: {
+                    fontColor: color
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                    }
+                }]
+            }
         }
     };
 
@@ -148,7 +185,7 @@ async function updateHTML() {
 
         var sir_data = get_sirs_between_dates(pop, dataset, startDate, endDate);
 
-        var chart = make_chart(sir_data, 2);
+        var chart = make_chart(sir_data, "infected", "red");
 
         var lineChart = new Chart(ctx, chart);
 
