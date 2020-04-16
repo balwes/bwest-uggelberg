@@ -124,7 +124,7 @@ function get_population(data) {
     return data[0].population;
 }
 
-function make_chart(sir_data, category) {
+function make_chart(sir_data, category, color) {
 
     if(sir_data === null) {
         return null;
@@ -149,8 +149,7 @@ function make_chart(sir_data, category) {
             labels: dates,
             datasets: [{
                 label: category,
-                backgroundColor: 'rgba(255, 0, 0, 0.5)',
-                borderColor: 'rgba(255, 0, 0, 1)',
+                borderColor: color, 
                 data: data
             }]
         },
@@ -159,7 +158,7 @@ function make_chart(sir_data, category) {
             maintainAspectRatio: true,
             legend: {
                 labels: {
-                    fontColor: 'rgba(255, 0, 0, 1)'
+                    fontColor: color
                 }
             },
             scales: {
@@ -194,7 +193,7 @@ async function updateHTML() {
 
         var sir_data = get_sirs_between_dates(pop, dataset, startDate, endDate);
 
-        var chart = make_chart(sir_data, 2);
+        var chart = make_chart(sir_data, 2, "red");
 
         var lineChart = new Chart(ctx, chart);
 
