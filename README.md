@@ -1,5 +1,6 @@
 ## Modeling COVID-19 spread
-This project models and presents recent data of the COVID-19 spread in Sweden.
+This project models and presents the COVID-19 spread in Sweden.
+It can also (primitively) predict future spread.
 
 ### Website of this repo
 https://bwest-uggelberg.github.io/covid19/
@@ -15,6 +16,7 @@ Set up a local HTTP server, we use http-server:
 `http-server`
 
 Then connect to the server's IP in the browser.
+Make sure to disable caching.
 
 ### Changing the scripts
 If you wish to make changes to the scripts that affect the browser side,
