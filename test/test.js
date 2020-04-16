@@ -294,7 +294,8 @@ describe("make_chart", function() {
             }
         }    
     };
-    
+
+    // Must be called after tests where line_chart is changed.
     function reset_line_chart() {
         line_chart.data.datasets[0].label = "";
         line_chart.data.datasets[0].borderColor = "";
