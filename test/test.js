@@ -36,6 +36,37 @@ const dataset = [
     }
 ];
 
+describe("get_start_and_end_date", function() {
+    it("get correct dates given correct data", async function () {
+        var dates = main.get_start_and_end_date(dataset);
+        expect(dates).to.have.members(["2020-1-22","2020-1-26"]);
+    });
+    it("get [] given null", async function () {
+        var dates = main.get_start_and_end_date(null);
+        expect(dates).to.be.empty;
+        expect(dates).to.be.an("array");
+    });
+    it("get [] given input of wrong type", async function () {
+        var dates = main.get_start_and_end_date("wrooong");
+        expect(dates).to.be.empty;
+        expect(dates).to.be.an("array");
+    });
+    it("get [] given an empty JSON object", async function () {
+        var dates = main.get_start_and_end_date({});
+        expect(dates).to.be.empty;
+        expect(dates).to.be.an("array");
+    });
+    it("get [] given JSON without the \"date\" member", async function () {
+        var badDataset = [
+            {"notdate": "xyz"},
+            {"notdate": "bnm"},
+        ];
+        var dates = main.get_start_and_end_date(badDataset);
+        expect(dates).to.be.empty;
+        expect(dates).to.be.an("array");
+    });
+});
+
 describe("url_to_json", function () {
     it("return null in the case of a bad link", async function () {
         var json = await main.url_to_json("bad link");
