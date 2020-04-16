@@ -188,39 +188,30 @@ function make_prediction(sir_data, extra_days) {
         return [];
     }
 
-    var infection_rates = [];
-    var removal_rates = [];
+    var s0 = sir_data[sir_data.length-2][1];
+    var s1 = sir_data[sir_data.length-1][1];
+    var i0 = sir_data[sir_data.length-2][2];
+    var r0 = sir_data[sir_data.length-2][3];
+    var r1 = sir_data[sir_data.length-1][3];
 
-    var i;
-    for (i = sir_data.length-1; i > 1; i--) {
-        infection_rates.push(sir_data[i][2] - sir_data[i-1][2]);
-    }
-    for (i = sir_data.length-1; i > 1; i--) {
-        removal_rates.push(sir_data[i][3] - sir_data[i-1][3]);
-    }
+    var b = (s0-s1)/(s0*i0);
 
-    //TODO
-    var b = 0.003;
-    var g = 0.1;
+    var g = (r1-r0)/i0;
 
     var prediction = sir_data;
 
     var last_sir_index = sir_data.length-1
     var last_prediction_index = last_sir_index + extra_days;
 
+    var i;
     for(i = last_sir_index; i < last_prediction_index; i++) {
-        console.log(i);
         var sprev = prediction[i][1];
-        console.log(sprev);
         var iprev = prediction[i][2];
-        console.log(iprev);
         var rprev = prediction[i][3];
-        console.log(rprev);
-        prediction.push([i,
+        prediction.push([i-last_sir_index,
             s_change(b,sprev,iprev),
             i_change(g, b, sprev,iprev,rprev),
             r_change(g,iprev,rprev)]);
-        console.log(prediction);
     }
 
     return prediction;
@@ -234,14 +225,16 @@ async function updateHTML() {
         var pop = 10000000
         var json = await url_to_json(url_to_covid_data);
         var dataset = json.Sweden;
-        var startDate = "2020-1-30";
-        var endDate = "2020-3-30";
+        var startDate = "2020-2-28";
+        var endDate = "2020-4-14";
 
         var sir_data = get_sirs_between_dates(pop, dataset, startDate, endDate);
 
-        var chart = make_chart(sir_data, "infected", "red");
+        var prediction = make_prediction(sir_data, 500);
 
-        var prediction = make_prediction(sir_data, 2);
+        console.log(prediction);
+
+        var chart = make_chart(prediction, "infected", "red");
 
         console.log(prediction);
 
