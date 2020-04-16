@@ -390,3 +390,24 @@ describe("make_chart", function() {
         expect(line_chart_removed).to.deep.equal(chart);
     });
 });
+
+describe("make_prediction", function() {
+
+    const sir_data = [
+        ["2020-1-22", 100,10,1],
+        ["2020-1-23", 90,20,1],
+        ["2020-1-24", 70,30,11]
+    ];
+
+    it("return empty list if sir_data is empty", function() {
+        var prediction = main.make_prediction([], 3);
+        expect(prediction).to.be.empty;
+        expect(prediction).to.be.an("array");
+    });
+
+    it("return array of correct length of predicted data", function() {
+        var prediction = main.make_prediction(sir_data, 10);
+        expect(prediction).to.be.an("array");
+        expect(prediction.length).to.be.equal(13);
+    });
+});
