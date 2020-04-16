@@ -92,7 +92,15 @@ function get_sirs_between_dates(population, dataset, startDate, endDate) {
  * Dates are a string YYYY-MM-DD (single-digit months and days not zero-padded).
  */
 function get_start_and_end_date(dataset) {
-    // ...
+    if (dataset == null ||
+        typeof(dataset) != "object" ||
+        dataset.length == undefined ||
+        dataset[0].date == undefined ||
+        dataset[dataset.length-1].date == undefined) {
+
+        return [];
+    }
+    return [dataset[0].date, dataset[dataset.length-1].date];
 }
 
 /*
