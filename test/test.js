@@ -400,14 +400,14 @@ describe("make_prediction", function() {
     ];
 
     it("return empty list if sir_data is empty", function() {
-        var prediction = make_prediction([], "2020-1-27");
+        var prediction = main.make_prediction([], 3);
         expect(prediction).to.be.empty;
         expect(prediction).to.be.an("array");
     });
 
     it("return array of correct length of predicted data", function() {
-        var prediction = make_prediction(sir_data, "2020-1-27");
+        var prediction = main.make_prediction(sir_data, 10);
         expect(prediction).to.be.an("array");
-        expect(prediction.length).to.be.equal(6);
+        expect(prediction.length).to.be.equal(13);
     });
 });
