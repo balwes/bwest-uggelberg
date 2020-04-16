@@ -88,6 +88,15 @@ function get_sirs_between_dates(population, dataset, startDate, endDate) {
 
 /*
  * Input: parsed JSON data
+ * Output: [date1, date2], or [] if anything goes wrong
+ * Dates are a string YYYY-MM-DD (single-digit months and days not zero-padded).
+ */
+function get_start_and_end_date(dataset) {
+    // ...
+}
+
+/*
+ * Input: parsed JSON data
  * Output: the population, or -1 if anything goes wrong
  */
 function get_population(data) {
@@ -196,7 +205,7 @@ async function updateHTML() {
 module.exports = {
     url_to_covid_data, url_to_population_data, url_to_json,
     get_sir_from_index, get_population, get_index_of_date,
-    make_chart, get_sirs_between_dates
+    make_chart, get_sirs_between_dates, get_start_and_end_date
 }
 
 
