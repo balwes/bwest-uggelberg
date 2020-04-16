@@ -171,6 +171,10 @@ function make_chart(sir_data, category, color) {
     return chart;
 }
 
+function make_prediction(sir_data, endDate) {
+
+    return prediction;
+}
 
 async function updateHTML() {
     try {
