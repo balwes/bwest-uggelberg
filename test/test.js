@@ -262,14 +262,14 @@ describe("make_chart", function() {
         ["2020-1-24", 70,30,11]
     ];
 
-    const line_chart_susceptible = {
+    const line_chart = {
         type: 'line',
         data: {
             labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
             datasets: [{
-                label: "susceptible",
-                borderColor: "blue",
-                data: [100, 90, 70]
+                label: "",
+                borderColor: "",
+                data: [-1,-1,-1]
             }]
         },
         options: {
@@ -277,7 +277,7 @@ describe("make_chart", function() {
             maintainAspectRatio: true,
             legend: {
                 labels: {
-                    fontColor: "blue"
+                    fontColor: ""
                 }
             },
             scales: {
@@ -295,72 +295,13 @@ describe("make_chart", function() {
         }    
     };
 
-    const line_chart_infected = {
-        type: 'line',
-        data: {
-            labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
-            datasets: [{
-                label: "infected",
-                borderColor: "red",
-                data: [10, 20, 30]
-            }]
-        },
-        options: {
-            responsive: false,
-            maintainAspectRatio: true,
-            legend: {
-                labels: {
-                    fontColor: "red"
-                }
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        fontColor: "white",
-                    }
-                }],
-                xAxes: [{
-                    ticks: {
-                        fontColor: "white",
-                    }
-                }]
-            }
-        }
-    };
-
-    const line_chart_removed = {
-        type: 'line',
-        data: {
-            labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
-            datasets: [{
-                label: "removed",
-                borderColor: "green",
-                data: [1,1,11]
-            }]
-        },
-        options: {
-            responsive: false,
-            maintainAspectRatio: true,
-            legend: {
-                labels: {
-                    fontColor: "green"
-                }
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        fontColor: "white",
-                    }
-                }],
-                xAxes: [{
-                    ticks: {
-                        fontColor: "white",
-                    }
-                }]
-            }
-        }
-
-    };
+    // Must be called after tests where line_chart is changed.
+    function reset_line_chart() {
+        line_chart.data.datasets[0].label = "";
+        line_chart.data.datasets[0].borderColor = "";
+        line_chart.data.datasets[0].data  = [-1,-1,-1];
+        line_chart.options.legend.labels.fontColor = "";
+    }
 
     it("return an object", function() {
         const chart = main.make_chart(sir_data, "susceptible", "blue");
@@ -378,16 +319,34 @@ describe("make_chart", function() {
     });
 
     it("return line chart of susceptible", function() {
-        const chart = main.make_chart(sir_data, "susceptible", "blue");
-        expect(line_chart_susceptible).to.deep.equal(chart);
+        const color = "blue";
+        const chart = main.make_chart(sir_data, "susceptible", color);
+        line_chart.data.datasets[0].label = "susceptible";
+        line_chart.data.datasets[0].borderColor = color;
+        line_chart.data.datasets[0].data = [100, 90, 70];
+        line_chart.options.legend.labels.fontColor = color;
+        expect(line_chart).to.deep.equal(chart);
+        reset_line_chart();
     });
     it("return line chart of infected", function() {
-        const chart = main.make_chart(sir_data, "infected", "red");
-        expect(line_chart_infected).to.deep.equal(chart);
+        const color = "red";
+        const chart = main.make_chart(sir_data, "infected", color);
+        line_chart.data.datasets[0].label = "infected";
+        line_chart.data.datasets[0].borderColor = color;
+        line_chart.data.datasets[0].data = [10, 20, 30];
+        line_chart.options.legend.labels.fontColor = color;
+        expect(line_chart).to.deep.equal(chart);
+        reset_line_chart();
     });
     it("return line chart of removed", function() {
-        const chart = main.make_chart(sir_data, "removed", "green");
-        expect(line_chart_removed).to.deep.equal(chart);
+        const color = "green";
+        const chart = main.make_chart(sir_data, "removed", color);
+        line_chart.data.datasets[0].label = "removed";
+        line_chart.data.datasets[0].borderColor = color;
+        line_chart.data.datasets[0].data = [1,1,11];
+        line_chart.options.legend.labels.fontColor = color;
+        expect(line_chart).to.deep.equal(chart);
+        reset_line_chart();
     });
 });
 
