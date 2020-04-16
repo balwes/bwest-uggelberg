@@ -200,27 +200,49 @@ function r_change(g, I, R) {
     return R + (g * I);
 }
 
-function make_prediction(sir_data, extra_days) {
+function make_prediction(sir_data, extra_days, past_days) {
     if(sir_data.length < 2) {
         return [];
     }
 
-    var s0 = sir_data[sir_data.length-2][1];
-    var s1 = sir_data[sir_data.length-1][1];
-    var i0 = sir_data[sir_data.length-2][2];
-    var r0 = sir_data[sir_data.length-2][3];
-    var r1 = sir_data[sir_data.length-1][3];
+    var i;
 
-    var b = (s0-s1)/(s0*i0);
+    if(past_days > sir_data.length) {
+        past_days = sir_data.length;
+    }
+    if(past_days < 2) {
+        past_days = 2;
+    }
 
-    var g = (r1-r0)/i0;
+    var bs = [];
+    var gs = [];
+
+    for(i = 0; i < past_days; i++) {
+        var s0 = sir_data[sir_data.length-(i+2)][1];
+        var s1 = sir_data[sir_data.length-(i+1)][1];
+        var i0 = sir_data[sir_data.length-(i+2)][2];
+        var r0 = sir_data[sir_data.length-(i+2)][3];
+        var r1 = sir_data[sir_data.length-(i+1)][3];
+
+        bs.push((s0-s1)/(s0*i0));
+        gs.push((r1-r0)/i0);
+    }
+
+    var b_sum = 0;
+    var g_sum = 0;
+    for(i = 0; i < past_days; i++) {
+        b_sum += bs[i];
+        g_sum += gs[i];
+    }
+
+    var b = b_sum/past_days;
+    var g = g_sum/past_days;
 
     var prediction = sir_data;
 
     var last_sir_index = sir_data.length-1
     var last_prediction_index = last_sir_index + extra_days;
 
-    var i;
     for(i = last_sir_index; i < last_prediction_index; i++) {
         var sprev = prediction[i][1];
         var iprev = prediction[i][2];
@@ -247,7 +269,7 @@ async function updateHTML() {
 
         var sir_data = get_sirs_between_dates(pop, dataset, startDate, endDate);
 
-        var prediction = make_prediction(sir_data, 500);
+        var prediction = make_prediction(sir_data, 500, 3);
 
         console.log(prediction);
 
