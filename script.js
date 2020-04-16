@@ -122,12 +122,31 @@ function make_chart(sir_data, category) {
             labels: dates,
             datasets: [{
                 label: category,
+                backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                borderColor: 'rgba(255, 0, 0, 1)',
                 data: data
             }]
         },
         options: {
             responsive: false,
-            maintainAspectRatio: true
+            maintainAspectRatio: true,
+            legend: {
+                labels: {
+                    fontColor: 'rgba(255, 0, 0, 1)'
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                    }
+                }]
+            }
         }
     };
 

@@ -273,7 +273,8 @@ describe("make_chart", function() {
         },
         options: {
             responsive: false,
-            maintainAspectRatio: true
+            maintainAspectRatio: true,
+            backgroundColor: 'rgba(255,0,0,0.3)'
         }
     };
 
@@ -288,7 +289,8 @@ describe("make_chart", function() {
         },
         options: {
             responsive: false,
-            maintainAspectRatio: true
+            maintainAspectRatio: true,
+            backgroundColor: 'rgba(255,0,0,0.3)'
         }
     };
 
@@ -303,7 +305,8 @@ describe("make_chart", function() {
         },
         options: {
             responsive: false,
-            maintainAspectRatio: true
+            maintainAspectRatio: true,
+            backgroundColor: 'rgba(255,0,0,0.3)'
         }
     };
 
