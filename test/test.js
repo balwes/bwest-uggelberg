@@ -267,7 +267,7 @@ describe("make_chart", function() {
         data: {
             labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
             datasets: [{
-                label: 1,
+                label: "susceptible",
                 borderColor: "blue",
                 data: [100, 90, 70]
             }]
@@ -300,7 +300,7 @@ describe("make_chart", function() {
         data: {
             labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
             datasets: [{
-                label: 2,
+                label: "infected",
                 borderColor: "red",
                 data: [10, 20, 30]
             }]
@@ -333,7 +333,7 @@ describe("make_chart", function() {
         data: {
             labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
             datasets: [{
-                label: 3,
+                label: "removed",
                 borderColor: "green",
                 data: [1,1,11]
             }]
@@ -363,35 +363,30 @@ describe("make_chart", function() {
     };
 
     it("return an object", function() {
-        const chart = main.make_chart(sir_data, 1, "blue");
+        const chart = main.make_chart(sir_data, "susceptible", "blue");
         expect(chart).to.be.an('object');
     });
 
     it("return null if non-existent category is called", function() {
-        const chart = main.make_chart(sir_data, 4, "blue");
-        expect(chart).to.be.a('null');
-    });
-
-    it("return null if non-existent category is called", function() {
-        const chart = main.make_chart(sir_data, 0, "blue");
+        const chart = main.make_chart(sir_data, "chinese", "blue");
         expect(chart).to.be.a('null');
     });
 
     it("return null if non-existent color is called", function() {
-        const chart = main.make_chart(sir_data, 0, "grue");
+        const chart = main.make_chart(sir_data, "susceptible", "grue");
         expect(chart).to.be.a('null');
     });
 
     it("return line chart of susceptible", function() {
-        const chart = main.make_chart(sir_data, 1, "blue");
+        const chart = main.make_chart(sir_data, "susceptible", "blue");
         expect(line_chart_susceptible).to.deep.equal(chart);
     });
     it("return line chart of infected", function() {
-        const chart = main.make_chart(sir_data, 2, "red");
+        const chart = main.make_chart(sir_data, "infected", "red");
         expect(line_chart_infected).to.deep.equal(chart);
     });
     it("return line chart of removed", function() {
-        const chart = main.make_chart(sir_data, 3, "green");
+        const chart = main.make_chart(sir_data, "removed", "green");
         expect(line_chart_removed).to.deep.equal(chart);
     });
 });
