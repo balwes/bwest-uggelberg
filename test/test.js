@@ -56,6 +56,15 @@ describe("get_start_and_end_date", function() {
         expect(dates).to.be.empty;
         expect(dates).to.be.an("array");
     });
+    it("get [] given JSON without the \"date\" member", async function () {
+        var badDataset = [
+            {"notdate": "xyz"},
+            {"notdate": "bnm"},
+        ];
+        var dates = main.get_start_and_end_date(badDataset);
+        expect(dates).to.be.empty;
+        expect(dates).to.be.an("array");
+    });
 });
 
 describe("url_to_json", function () {
