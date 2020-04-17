@@ -298,19 +298,19 @@ describe("make_chart", function() {
         data: {
             labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
             datasets: [{
-                label: "",
-                borderColor: "",
-                data: [-1,-1,-1]
+                label: "susceptible",
+                borderColor: "green",
+                data: [100, 90, 70]
             },
             {
-                label: "",
-                borderColor: "",
-                data: [-1,-1,-1]
+                label: "infected",
+                borderColor: "red",
+                data: [10, 20, 30]
             },
             {
-                label: "",
-                borderColor: "",
-                data: [-1,-1,-1]
+                label: "removed",
+                borderColor: "blue",
+                data: [1,1,11]
             }]
         },
         options: {
@@ -336,27 +336,9 @@ describe("make_chart", function() {
         }    
     };
 
-    // Must be called after tests where line_chart is changed.
-    function reset_line_chart() {
-        line_chart.data.datasets[0].label = "";
-        line_chart.data.datasets[0].borderColor = "";
-        line_chart.data.datasets[0].data  = [-1,-1,-1];
-        line_chart.options.legend.labels.fontColor = "";
-    }
-
     it("return an object", function() {
-        const chart = main.make_chart(sir_data, "susceptible", "blue");
+        const chart = main.make_chart(sir_data);
         expect(chart).to.be.an('object');
-    });
-
-    it("return null if non-existent category is called", function() {
-        const chart = main.make_chart(sir_data, "chinese", "blue");
-        expect(chart).to.be.a('null');
-    });
-
-    it("return null if non-existent color is called", function() {
-        const chart = main.make_chart(sir_data, "susceptible", "grue");
-        expect(chart).to.be.a('null');
     });
 
     it("return line chart of SIR data", function() {
@@ -369,16 +351,15 @@ describe("make_chart", function() {
         line_chart.data.datasets[0].borderColor = s_color;
         line_chart.data.datasets[0].data = [100, 90, 70];
 
-        line_chart.data.datasets[0].label = "infected";
-        line_chart.data.datasets[0].borderColor = i_color;
-        line_chart.data.datasets[0].data = [10, 20, 30];
+        line_chart.data.datasets[1].label = "infected";
+        line_chart.data.datasets[1].borderColor = i_color;
+        line_chart.data.datasets[1].data = [10, 20, 30];
 
-        line_chart.data.datasets[0].label = "removed";
-        line_chart.data.datasets[0].borderColor = r_color;
-        line_chart.data.datasets[0].data = [1,1,11];
+        line_chart.data.datasets[2].label = "removed";
+        line_chart.data.datasets[2].borderColor = r_color;
+        line_chart.data.datasets[2].data = [1,1,11];
 
         expect(line_chart).to.deep.equal(chart);
-        reset_line_chart();
     });
 });
 

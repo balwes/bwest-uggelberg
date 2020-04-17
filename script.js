@@ -114,42 +114,24 @@ function get_population(data) {
     return data[0].population;
 }
 
-function make_chart(sir_data, category, color) {
+function make_chart(sir_data) {
 
     if(sir_data === null) {
         return null;
     }
 
-    if(category != "susceptible" 
-        && category != "infected" 
-        && category != "removed") {
-        return null;
-    }
-
-    if(color != "red" 
-        && color != "blue" 
-        && color != "green") {
-        return null;
-    }
-
     var dates = [];
-    var data = [];
+    var s_data = [];
+    var i_data = [];
+    var r_data = [];
 
-    var sir_pos;
-    if(category === "susceptible") {
-        sir_pos = 1;
-    }
-    if(category === "infected") {
-        sir_pos = 2;
-    }
-    if(category === "removed") {
-        sir_pos = 3;
-    }
 
     var i;
     for(i = 0; i < sir_data.length; i++) {
         dates.push(sir_data[i][0]);
-        data.push(sir_data[i][sir_pos]);
+        s_data.push(sir_data[i][1]);
+        i_data.push(sir_data[i][2]);
+        r_data.push(sir_data[i][3]);
     }
 
     var chart = {
@@ -157,9 +139,19 @@ function make_chart(sir_data, category, color) {
         data: {
             labels: dates,
             datasets: [{
-                label: category,
-                borderColor: color, 
-                data: data
+                label: "susceptible",
+                borderColor: "green", 
+                data: s_data
+            },
+            {
+                label: "infected",
+                borderColor: "red", 
+                data: i_data
+            },
+            {
+                label: "removed",
+                borderColor: "blue", 
+                data: r_data
             }]
         },
         options: {
@@ -167,7 +159,7 @@ function make_chart(sir_data, category, color) {
             maintainAspectRatio: true,
             legend: {
                 labels: {
-                    fontColor: color
+                    fontColor: "white"
                 }
             },
             scales: {
