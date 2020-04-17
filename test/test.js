@@ -301,6 +301,16 @@ describe("make_chart", function() {
                 label: "",
                 borderColor: "",
                 data: [-1,-1,-1]
+            },
+            {
+                label: "",
+                borderColor: "",
+                data: [-1,-1,-1]
+            },
+            {
+                label: "",
+                borderColor: "",
+                data: [-1,-1,-1]
             }]
         },
         options: {
@@ -308,7 +318,7 @@ describe("make_chart", function() {
             maintainAspectRatio: true,
             legend: {
                 labels: {
-                    fontColor: ""
+                    fontColor: "white"
                 }
             },
             scales: {
@@ -349,33 +359,24 @@ describe("make_chart", function() {
         expect(chart).to.be.a('null');
     });
 
-    it("return line chart of susceptible", function() {
-        const color = "blue";
-        const chart = main.make_chart(sir_data, "susceptible", color);
+    it("return line chart of SIR data", function() {
+        const s_color = "green";
+        const i_color = "red";
+        const r_color = "blue";
+        const chart = main.make_chart(sir_data);
+
         line_chart.data.datasets[0].label = "susceptible";
-        line_chart.data.datasets[0].borderColor = color;
+        line_chart.data.datasets[0].borderColor = s_color;
         line_chart.data.datasets[0].data = [100, 90, 70];
-        line_chart.options.legend.labels.fontColor = color;
-        expect(line_chart).to.deep.equal(chart);
-        reset_line_chart();
-    });
-    it("return line chart of infected", function() {
-        const color = "red";
-        const chart = main.make_chart(sir_data, "infected", color);
+
         line_chart.data.datasets[0].label = "infected";
-        line_chart.data.datasets[0].borderColor = color;
+        line_chart.data.datasets[0].borderColor = i_color;
         line_chart.data.datasets[0].data = [10, 20, 30];
-        line_chart.options.legend.labels.fontColor = color;
-        expect(line_chart).to.deep.equal(chart);
-        reset_line_chart();
-    });
-    it("return line chart of removed", function() {
-        const color = "green";
-        const chart = main.make_chart(sir_data, "removed", color);
+
         line_chart.data.datasets[0].label = "removed";
         line_chart.data.datasets[0].borderColor = color;
         line_chart.data.datasets[0].data = [1,1,11];
-        line_chart.options.legend.labels.fontColor = color;
+
         expect(line_chart).to.deep.equal(chart);
         reset_line_chart();
     });

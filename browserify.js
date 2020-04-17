@@ -292,7 +292,7 @@ async function updateHTML() {
         var json = await url_to_json(url_to_covid_data);
         var dataset = json.Sweden;
         var startDate = "2020-2-28";
-        var endDate = "2020-4-14";
+        var endDate = "2020-4-10";
 
         var sir_data = get_sirs_between_dates(pop, dataset, startDate, endDate);
 
