@@ -141,6 +141,27 @@ function get_population(data) {
     return data[0].population;
 }
 
+function remove_date_padding(padded_date) {
+    var year = padded_date.slice(0,4);
+    var month = padded_date.slice(5,7);
+    var day = padded_date.slice(8,10);
+
+    if(month.slice(0,1) === "0") {
+        month = month.slice(1,2);
+    }
+
+    if(day.slice(0,1) === "0") {
+        day = day.slice(1,2);
+    }
+
+    if(parseInt(year) < 2020 
+        || (parseInt(month) < 2 && parseInt(day) < 22)) {
+        return "2020-1-22";
+    }
+
+    return year + "-" + month + "-" + day;
+}
+
 function make_chart(sir_data) {
 
     if(sir_data === null) {
@@ -306,7 +327,7 @@ module.exports = {
     url_to_covid_data, url_to_population_data, url_to_json,
     get_sir_from_index, get_population, get_index_of_date,
     make_chart, get_sirs_between_dates, get_start_and_end_date, 
-    make_prediction
+    make_prediction, remove_date_padding
 
 }
 

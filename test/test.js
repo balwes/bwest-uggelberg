@@ -386,18 +386,18 @@ describe("make_prediction", function() {
 
 describe("remove_date_padding", function() {
 
-    var padded_date = "2020-01-01";
-    var unpadded_date = "2020-1-1";
+    var padded_date = "2020-03-01";
+    var unpadded_date = "2020-3-1";
 
     var early_padded_date = "1990-01-01";
 
     it("return valid unpadded date from valid padded date", function() {
-        var date = remove_date_padding(padded_date);
-        expect(date).to.be.equal(unpadded);
+        var date = main.remove_date_padding(padded_date);
+        expect(date).to.be.equal(unpadded_date);
     });
 
     it("return date of first data if date is too early", function() {
-        var date = remove_date_padding(early_padded_date);
+        var date = main.remove_date_padding(early_padded_date);
         expect(date).to.be.equal("2020-1-22");
     });
 
