@@ -374,7 +374,7 @@ describe("make_chart", function() {
         line_chart.data.datasets[0].data = [10, 20, 30];
 
         line_chart.data.datasets[0].label = "removed";
-        line_chart.data.datasets[0].borderColor = color;
+        line_chart.data.datasets[0].borderColor = r_color;
         line_chart.data.datasets[0].data = [1,1,11];
 
         expect(line_chart).to.deep.equal(chart);
