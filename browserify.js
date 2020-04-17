@@ -167,7 +167,7 @@ function make_chart(sir_data) {
             labels: dates,
             datasets: [{
                 label: "susceptible",
-                borderColor: "green", 
+                borderColor: "green",
                 data: s_data
             },
             {
