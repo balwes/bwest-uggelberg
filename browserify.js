@@ -283,6 +283,10 @@ async function updateHTML() {
         var pop = 10000000
         var json = await url_to_json(url_to_covid_data);
         var dataset = json.Sweden;
+
+        var x = document.getElementById("start-date").value; 
+        console.log(x)
+
         var startDate = "2020-2-28";
         var endDate = "2020-4-10";
 
@@ -290,11 +294,7 @@ async function updateHTML() {
 
         var prediction = make_prediction(sir_data, 500, 3);
 
-        console.log(prediction);
-
-        var chart = make_chart(prediction, "infected", "red");
-
-        console.log(prediction);
+        var chart = make_chart(prediction);
 
         var lineChart = new Chart(ctx, chart);
 
@@ -305,10 +305,10 @@ async function updateHTML() {
 module.exports = {
     url_to_covid_data, url_to_population_data, url_to_json,
     get_sir_from_index, get_population, get_index_of_date,
-    make_chart, get_sirs_between_dates, get_start_and_end_date, make_prediction
+    make_chart, get_sirs_between_dates, get_start_and_end_date, 
+    make_prediction
 
 }
-
 
 updateHTML();
 
