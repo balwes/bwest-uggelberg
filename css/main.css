@@ -643,6 +643,16 @@ label.date-label {
   padding: 0px 10px 0px 10px;
 }
 
+button.datebtn {
+  margin: 0 0 0 10px;
+  background: transparent;
+  border-color: #ccc;
+}
+
+button.datebtn:active {
+  background: #ccc;
+}
+
 .item-boxes {
   text-align: center;
   padding: 0px 15px;

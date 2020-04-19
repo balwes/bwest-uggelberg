@@ -346,19 +346,12 @@ async function updateHTML() {
             (two_days_ago.getDate() - 2);
 
         var sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
-
         var prediction = make_prediction(sir_data, 7, 5);
-
         var chart = make_chart(prediction);
-
         var lineChart = new Chart(ctx, chart);
 
-        document.getElementById("start-date").addEventListener("change", function(){
-            location.reload();
-        });
-
-        document.getElementById("end-date").addEventListener("change", function(){
-            location.reload();
+        document.getElementById("date-button").addEventListener("click", function(){
+            console.log("clicked");
         });
     }
     catch (error) {}
