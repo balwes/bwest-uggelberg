@@ -402,3 +402,30 @@ describe("remove_date_padding", function() {
     });
 
 });
+
+describe("pad_date", function() {
+    it("return \"\" for wrong input type", function() {
+        var padded = main.pad_date(1234);
+        expect(padded).to.be.equal("");
+    });
+    it("return \"\" for null input", function() {
+        var padded = main.pad_date(null);
+        expect(padded).to.be.equal("");
+    });
+    it("return \"\" for badly formatted date", function() {
+        var padded = main.pad_date("2020-01-01-01");
+        expect(padded).to.be.equal("");
+    });
+    it("return the same string if date is already padded", function() {
+        var date = "2020-04-19";
+        var padded = main.pad_date(date);
+        expect(padded).to.be.equal(date);
+    });
+    it("return the padded string for an un-padded date", function() {
+        var padded = main.pad_date("2020-4-19");
+        expect(padded).to.be.equal("2020-04-19");
+        
+        padded = main.pad_date("2020-04-9");
+        expect(padded).to.be.equal("2020-04-09");
+    });
+});

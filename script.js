@@ -114,6 +114,27 @@ function get_population(data) {
     return data[0].population;
 }
 
+/*
+ * Input: a date string in the format YYYY-MM-DD (not zero-padded)
+ * Output: the zero-padded date string, or "" if anything goes wrong.
+ */
+function pad_date(date_string) {
+    if (typeof(date_string) != "string") {
+        return "";
+    }
+    var parts = date_string.split("-");
+    if (parts.length != 3) {
+        return "";
+    }
+    if (parts[1].length == 1) {
+        parts[1] = "0"+parts[1];
+    }
+    if (parts[2].length == 1) {
+        parts[2] = "0"+parts[2];
+    }
+    return parts[0]+"-"+parts[1]+"-"+parts[2];
+}
+
 function remove_date_padding(padded_date) {
     var year = padded_date.slice(0,4);
     var month = padded_date.slice(5,7);
@@ -323,7 +344,7 @@ module.exports = {
     url_to_covid_data, url_to_population_data, url_to_json,
     get_sir_from_index, get_population, get_index_of_date,
     make_chart, get_sirs_between_dates, get_start_and_end_date, 
-    make_prediction, remove_date_padding
+    make_prediction, remove_date_padding, pad_date
 
 }
 
