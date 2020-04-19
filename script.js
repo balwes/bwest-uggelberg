@@ -291,7 +291,29 @@ function make_prediction(sir_data, extra_days, past_days) {
     return prediction;
 }
 
+function days_between_dates(date1, date2) {
 
+    if(date1 == null || date2 == null) {
+        return 0;
+    }
+
+    date1 = date1.split("-");
+    var firstDate = Date.UTC(
+        parseInt(date1[0]),
+        parseInt(date1[1])-1,
+        parseInt(date1[2]));
+
+    date2 = date2.split("-");
+    var secondDate = Date.UTC(
+        parseInt(date2[0]),
+        parseInt(date2[1]-1),
+        parseInt(date2[2]));
+
+    const oneDay = 24 * 60 * 60 * 1000;
+
+    var result = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+    return result;
+}
 
 function addDays(date, days) {
     var result = new Date(date);
@@ -355,8 +377,9 @@ async function updateHTML() {
             } else {
                 save_dates();
                 start_date = remove_date_padding(start_date);
-                sir_data = get_sirs_between_dates(pop, dataset, start_date, two_days_ago);
-                prediction = make_prediction(sir_data, 7, 5);
+                sir_data = get_sirs_between_dates(pop, dataset, startdate, two_days_ago);
+                var extra_days = days_between_dates(two_days_ago, enddate);
+                prediction = make_prediction(sir_data, extra_days, 5);
                 chart = make_chart(prediction);
                 lineChart = new Chart(ctx, chart);
             }
@@ -369,8 +392,8 @@ module.exports = {
     url_to_covid_data, url_to_population_data, url_to_json,
     get_sir_from_index, get_population, get_index_of_date,
     make_chart, get_sirs_between_dates, get_start_and_end_date, 
-    make_prediction, remove_date_padding, pad_date
-
+    make_prediction, remove_date_padding, pad_date, 
+    days_between_dates
 }
 
 updateHTML();
