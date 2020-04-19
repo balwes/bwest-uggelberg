@@ -402,10 +402,11 @@ async function updateHTML() {
             } else if (parsed_start > parsed_end) {
                 reset_dates();
             } else {
+                lineChart.destroy();
                 save_dates();
                 start_date = remove_date_padding(start_date);
-                sir_data = get_sirs_between_dates(pop, dataset, startdate, two_days_ago);
-                var extra_days = days_between_dates(two_days_ago, enddate);
+                sir_data = get_sirs_between_dates(pop, dataset, start_date, two_days_ago);
+                var extra_days = days_between_dates(two_days_ago, end_date);
                 prediction = make_prediction(sir_data, extra_days, 5);
                 chart = make_chart(prediction);
                 lineChart = new Chart(ctx, chart);
