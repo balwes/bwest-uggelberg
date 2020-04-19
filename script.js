@@ -253,20 +253,31 @@ function make_prediction(sir_data, extra_days, past_days) {
 
     var prediction = sir_data;
 
-    var last_sir_index = sir_data.length-1
+    var last_sir_date = sir_data[sir_data.length-1][0];
+    var last_sir_index = sir_data.length-1;
     var last_prediction_index = last_sir_index + extra_days;
 
     for(i = last_sir_index; i < last_prediction_index; i++) {
         var sprev = prediction[i][1];
         var iprev = prediction[i][2];
         var rprev = prediction[i][3];
-        prediction.push([i-last_sir_index,
+        prediction.push([addDays(last_sir_date, (i-last_sir_index)+1),
             s_change(b,sprev,iprev),
             i_change(g, b, sprev,iprev,rprev),
             r_change(g,iprev,rprev)]);
     }
 
     return prediction;
+}
+
+
+
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    result = result.getFullYear() + "-" + 
+    (result.getMonth()+1) + "-" + (result.getDate());    
+    return result;
 }
 
 async function updateHTML() {
@@ -278,13 +289,18 @@ async function updateHTML() {
         var json = await url_to_json(url_to_covid_data);
         var dataset = json.Sweden;
 
-        var x = document.getElementById("start-date").value; 
-        console.log(x)
+        var padded_start_date = document.getElementById("start-date").value;
+        var padded_end_date = document.getElementById("end-date").value;
 
-        var startDate = "2020-2-28";
-        var endDate = "2020-4-10";
+        var two_days_ago = new Date();
+        two_days_ago = two_days_ago.getFullYear() + "-" +
+            (two_days_ago.getMonth() + 1) + "-" +
+            (two_days_ago.getDate() - 2);
 
-        var sir_data = get_sirs_between_dates(pop, dataset, startDate, endDate);
+        var start_date = remove_date_padding(padded_start_date);
+        var end_date = remove_date_padding(padded_end_date);
+
+        var sir_data = get_sirs_between_dates(pop, dataset, start_date, two_days_ago);
 
         var prediction = make_prediction(sir_data, 500, 3);
 
@@ -292,6 +308,13 @@ async function updateHTML() {
 
         var lineChart = new Chart(ctx, chart);
 
+        document.getElementById("start-date").addEventListener("change", function(){
+            location.reload();
+        });
+
+        document.getElementById("end-date").addEventListener("change", function(){
+            location.reload();
+        });
     }
     catch (error) {}
 }
@@ -305,4 +328,6 @@ module.exports = {
 }
 
 updateHTML();
+
+
 
