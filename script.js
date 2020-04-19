@@ -302,6 +302,20 @@ function addDays(date, days) {
 }
 
 async function updateHTML() {
+    var previous_start_date;
+    var previous_end_date;
+
+    function save_dates() {
+        previous_start_date = document.getElementById("start-date").value;
+        previous_end_date   = document.getElementById("end-date").value;
+    }
+
+    // Set the date inputs to the previous correct ones.
+    function reset_dates() {
+        document.getElementById("start-date").value = previous_start_date;
+        document.getElementById("end-date").value   = previous_end_date;
+    }
+
     try {
         var ctx = document.getElementById('chart').getContext('2d');
 
@@ -312,7 +326,8 @@ async function updateHTML() {
         var dates = get_start_and_end_date(dataset);
         document.getElementById("start-date").value = pad_date(dates[0]);
         document.getElementById("end-date").value   = pad_date(dates[1]);
-
+        save_dates();
+        
         var two_days_ago = new Date();
         two_days_ago = two_days_ago.getFullYear() + "-" +
             (two_days_ago.getMonth() + 1) + "-" +
@@ -324,12 +339,27 @@ async function updateHTML() {
         var lineChart = new Chart(ctx, chart);
 
         document.getElementById("date-button").addEventListener("click", function(){
-            var startdate = document.getElementById("start-date").value;
-            startdate = remove_date_padding(startdate);
-            sir_data = get_sirs_between_dates(pop, dataset, startdate, two_days_ago);
-            prediction = make_prediction(sir_data, 7, 5);
-            chart = make_chart(prediction);
-            lineChart = new Chart(ctx, chart);
+            var start_date = document.getElementById("start-date").value;
+            var end_date = document.getElementById("end-date").value;
+
+            var parsed_start = Date.parse(start_date);
+            var parsed_end   = Date.parse(end_date);
+            if (parsed_start == NaN || parsed_end == NaN) {
+                // Actually, this should never happen because the date
+                // picker input doesn't allow for arbitrary strings.
+                reset_dates();
+            } else if (parsed_start < Date.parse(dates[0])) {
+                reset_dates();
+            } else if (parsed_start > parsed_end) {
+                reset_dates();
+            } else {
+                save_dates();
+                start_date = remove_date_padding(start_date);
+                sir_data = get_sirs_between_dates(pop, dataset, start_date, two_days_ago);
+                prediction = make_prediction(sir_data, 7, 5);
+                chart = make_chart(prediction);
+                lineChart = new Chart(ctx, chart);
+            }
         });
     }
     catch (error) {}
