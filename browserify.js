@@ -78,7 +78,7 @@ function get_sir_from_index(population, dataset, index) {
     // susceptible
     sir[1] = population - data.confirmed - data.recovered;
     // infectious
-    sir[2] = data.confirmed;
+    sir[2] = data.confirmed - data.recovered - data.deaths;
     // removed
     sir[3] = data.recovered + data.deaths;
     return sir;
@@ -330,7 +330,6 @@ function addDays(date, days) {
 
 async function updateHTML() {
     try {
-        document.getElementById("data").innerHTML = "Data from JS";
         var ctx = document.getElementById('chart').getContext('2d');
 
         var pop = (await url_to_json(url_to_population_data))[0].population;
@@ -348,7 +347,7 @@ async function updateHTML() {
 
         var sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
 
-        var prediction = make_prediction(sir_data, 500, 3);
+        var prediction = make_prediction(sir_data, 7, 5);
 
         var chart = make_chart(prediction);
 
