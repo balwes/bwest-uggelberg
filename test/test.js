@@ -81,6 +81,7 @@ describe("url_to_json", function () {
         expect(json).to.be.equal(null);
     });
     it("return null given a valid link to non-json data", async function () {
+        this.timeout(1000);
         var link = "https://duckduckgo.com/";
         var json = await main.url_to_json(link);
         expect(json).to.be.equal(null);
@@ -90,6 +91,7 @@ describe("url_to_json", function () {
         expect(json).to.be.equal(null);
     });
     it("return json data given a valid link to json data", async function () {
+        this.timeout(1000);
         var link = main.url_to_covid_data;
         var json = await main.url_to_json(link);
         // Accessing a non-existent member should return undefined
