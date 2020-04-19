@@ -324,7 +324,12 @@ async function updateHTML() {
         var lineChart = new Chart(ctx, chart);
 
         document.getElementById("date-button").addEventListener("click", function(){
-            console.log("clicked");
+            var startdate = document.getElementById("start-date").value;
+            startdate = remove_date_padding(startdate);
+            sir_data = get_sirs_between_dates(pop, dataset, startdate, two_days_ago);
+            prediction = make_prediction(sir_data, 7, 5);
+            chart = make_chart(prediction);
+            lineChart = new Chart(ctx, chart);
         });
     }
     catch (error) {}
