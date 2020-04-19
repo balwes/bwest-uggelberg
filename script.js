@@ -330,6 +330,7 @@ async function updateHTML() {
             prediction = make_prediction(sir_data, 7, 5);
             chart = make_chart(prediction);
             lineChart = new Chart(ctx, chart);
+
         });
     }
     catch (error) {}
