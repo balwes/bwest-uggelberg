@@ -301,6 +301,7 @@ describe("make_chart", function() {
             labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
             datasets: [{
                 label: "susceptible",
+                hidden: true,
                 borderColor: "green",
                 data: [100, 90, 70]
             },
