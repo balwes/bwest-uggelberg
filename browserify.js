@@ -339,7 +339,7 @@ function days_between_dates(date1, date2) {
 
     const oneDay = 24 * 60 * 60 * 1000;
 
-    var result = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+    var result = Math.round((secondDate - firstDate) / oneDay);
     return result;
 }
 
@@ -406,9 +406,17 @@ async function updateHTML() {
                 lineChart.destroy();
                 save_dates();
                 start_date = remove_date_padding(start_date);
-                sir_data = get_sirs_between_dates(pop, dataset, start_date, two_days_ago);
-                var extra_days = days_between_dates(two_days_ago, end_date);
-                prediction = make_prediction(sir_data, extra_days, 5);
+                if(days_between_dates(two_days_ago, end_date) < 0) {
+                    sir_data = get_sirs_between_dates(pop, dataset, start_date, remove_date_padding(end_date));
+                    prediction = sir_data;
+                }
+                else { 
+                    sir_data = get_sirs_between_dates(pop, dataset, start_date, two_days_ago);
+                    var extra_days = days_between_dates(two_days_ago, end_date);
+                    prediction = make_prediction(sir_data, extra_days, 5);
+                }
+                
+
                 chart = make_chart(prediction);
                 lineChart = new Chart(ctx, chart);
             }
