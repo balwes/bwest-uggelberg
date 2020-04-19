@@ -310,16 +310,14 @@ async function updateHTML() {
         var json = await url_to_json(url_to_covid_data);
         var dataset = json.Sweden;
 
-        var padded_start_date = document.getElementById("start-date").value;
-        var padded_end_date = document.getElementById("end-date").value;
+        var dates = get_start_and_end_date(dataset);
+        document.getElementById("start-date").value = pad_date(dates[0]);
+        document.getElementById("end-date").value   = pad_date(dates[1]);
 
         var two_days_ago = new Date();
         two_days_ago = two_days_ago.getFullYear() + "-" +
             (two_days_ago.getMonth() + 1) + "-" +
             (two_days_ago.getDate() - 2);
-
-        var start_date = remove_date_padding(padded_start_date);
-        var end_date = remove_date_padding(padded_end_date);
 
         var sir_data = get_sirs_between_dates(pop, dataset, start_date, two_days_ago);
 
