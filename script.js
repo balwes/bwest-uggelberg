@@ -347,9 +347,14 @@ async function updateHTML() {
 
         document.getElementById("date-button").addEventListener("click", function(){
             var startdate = document.getElementById("start-date").value;
+            var enddate = document.getElementById("end-date").value;
+
             startdate = remove_date_padding(startdate);
+            enddate = remove_date_padding(enddate);
+
             sir_data = get_sirs_between_dates(pop, dataset, startdate, two_days_ago);
-            prediction = make_prediction(sir_data, 7, 5);
+            var extra_days = days_between_dates(two_days_ago, enddate);
+            prediction = make_prediction(sir_data, extra_days, 5);
             chart = make_chart(prediction);
             lineChart = new Chart(ctx, chart);
 
@@ -364,7 +369,6 @@ module.exports = {
     make_chart, get_sirs_between_dates, get_start_and_end_date, 
     make_prediction, remove_date_padding, pad_date, 
     days_between_dates
-
 }
 
 updateHTML();
