@@ -319,7 +319,7 @@ async function updateHTML() {
             (two_days_ago.getMonth() + 1) + "-" +
             (two_days_ago.getDate() - 2);
 
-        var sir_data = get_sirs_between_dates(pop, dataset, start_date, two_days_ago);
+        var sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
 
         var prediction = make_prediction(sir_data, 500, 3);
 
