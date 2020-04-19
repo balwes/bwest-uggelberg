@@ -354,7 +354,12 @@ async function updateHTML() {
         var lineChart = new Chart(ctx, chart);
 
         document.getElementById("start-date").addEventListener("change", function(){
-            location.reload();
+            prediction = make_prediction(sir_data, 70, 5);
+
+            chart = make_chart(prediction);
+
+            lineChart = new Chart(ctx, chart);
+
         });
 
         document.getElementById("end-date").addEventListener("change", function(){

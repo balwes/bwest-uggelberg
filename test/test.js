@@ -429,3 +429,31 @@ describe("pad_date", function() {
         expect(padded).to.be.equal("2020-04-09");
     });
 });
+
+describe("days_between_dates", function() {
+
+    var date1 = "2020-1-1";
+    var date2 = "2020-2-15";
+    var diff = 45;
+
+    it("return 0 if both dates are null", function() {
+        var result = days_between_dates(null, null);
+        expect(result).to.be.equal(0);
+    });
+
+    it("return 0 if date1 is null", function() {
+        var result = days_between_dates(null, date2);
+        expect(result).to.be.equal(0);
+    });
+
+    it("return 0 if date2 is null", function() {
+        var result = days_between_dates(date1, null);
+        expect(result).to.be.equal(0);
+    });
+
+    it("return correct number of days between dates", function() {
+        var result = days_between_dates(date1, date2);
+        expect(result).to.be.equal(diff);
+    });
+
+});
