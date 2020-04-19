@@ -157,7 +157,7 @@ describe("get_sir_from_index", async function() {
         var sir = main.get_sir_from_index(pop, dataset, 3);
         expect(sir[0]).to.be.equal("2020-1-25");
         expect(sir[1]).to.be.equal(pop-10-12);
-        expect(sir[2]).to.be.equal(10);
+        expect(sir[2]).to.be.equal(-13);
         expect(sir[3]).to.be.equal(12+11);
     });
     it("return [\"\",-1,-1,-1] from a population of wrong type", async function() {
