@@ -313,7 +313,7 @@ async function updateHTML() {
         document.getElementById("data").innerHTML = "Data from JS";
         var ctx = document.getElementById('chart').getContext('2d');
 
-        var pop = 10000000
+        var pop = (await url_to_json(url_to_population_data))[0].population;
         var json = await url_to_json(url_to_covid_data);
         var dataset = json.Sweden;
 
