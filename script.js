@@ -114,42 +114,45 @@ function get_population(data) {
     return data[0].population;
 }
 
-function make_chart(sir_data, category, color) {
+function remove_date_padding(padded_date) {
+    var year = padded_date.slice(0,4);
+    var month = padded_date.slice(5,7);
+    var day = padded_date.slice(8,10);
+
+    if(month.slice(0,1) === "0") {
+        month = month.slice(1,2);
+    }
+
+    if(day.slice(0,1) === "0") {
+        day = day.slice(1,2);
+    }
+
+    if(parseInt(year) < 2020 
+        || (parseInt(month) < 2 && parseInt(day) < 22)) {
+        return "2020-1-22";
+    }
+
+    return year + "-" + month + "-" + day;
+}
+
+function make_chart(sir_data) {
 
     if(sir_data === null) {
         return null;
     }
 
-    if(category != "susceptible" 
-        && category != "infected" 
-        && category != "removed") {
-        return null;
-    }
-
-    if(color != "red" 
-        && color != "blue" 
-        && color != "green") {
-        return null;
-    }
-
     var dates = [];
-    var data = [];
+    var s_data = [];
+    var i_data = [];
+    var r_data = [];
 
-    var sir_pos;
-    if(category === "susceptible") {
-        sir_pos = 1;
-    }
-    if(category === "infected") {
-        sir_pos = 2;
-    }
-    if(category === "removed") {
-        sir_pos = 3;
-    }
 
     var i;
     for(i = 0; i < sir_data.length; i++) {
         dates.push(sir_data[i][0]);
-        data.push(sir_data[i][sir_pos]);
+        s_data.push(sir_data[i][1]);
+        i_data.push(sir_data[i][2]);
+        r_data.push(sir_data[i][3]);
     }
 
     var chart = {
@@ -157,9 +160,19 @@ function make_chart(sir_data, category, color) {
         data: {
             labels: dates,
             datasets: [{
-                label: category,
-                borderColor: color, 
-                data: data
+                label: "susceptible",
+                borderColor: "green",
+                data: s_data
+            },
+            {
+                label: "infected",
+                borderColor: "red", 
+                data: i_data
+            },
+            {
+                label: "removed",
+                borderColor: "blue", 
+                data: r_data
             }]
         },
         options: {
@@ -167,7 +180,7 @@ function make_chart(sir_data, category, color) {
             maintainAspectRatio: true,
             legend: {
                 labels: {
-                    fontColor: color
+                    fontColor: "white"
                 }
             },
             scales: {
@@ -240,20 +253,31 @@ function make_prediction(sir_data, extra_days, past_days) {
 
     var prediction = sir_data;
 
-    var last_sir_index = sir_data.length-1
+    var last_sir_date = sir_data[sir_data.length-1][0];
+    var last_sir_index = sir_data.length-1;
     var last_prediction_index = last_sir_index + extra_days;
 
     for(i = last_sir_index; i < last_prediction_index; i++) {
         var sprev = prediction[i][1];
         var iprev = prediction[i][2];
         var rprev = prediction[i][3];
-        prediction.push([i-last_sir_index,
+        prediction.push([addDays(last_sir_date, (i-last_sir_index)+1),
             s_change(b,sprev,iprev),
             i_change(g, b, sprev,iprev,rprev),
             r_change(g,iprev,rprev)]);
     }
 
     return prediction;
+}
+
+
+
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    result = result.getFullYear() + "-" + 
+    (result.getMonth()+1) + "-" + (result.getDate());    
+    return result;
 }
 
 async function updateHTML() {
@@ -264,21 +288,33 @@ async function updateHTML() {
         var pop = 10000000
         var json = await url_to_json(url_to_covid_data);
         var dataset = json.Sweden;
-        var startDate = "2020-2-28";
-        var endDate = "2020-4-14";
 
-        var sir_data = get_sirs_between_dates(pop, dataset, startDate, endDate);
+        var padded_start_date = document.getElementById("start-date").value;
+        var padded_end_date = document.getElementById("end-date").value;
+
+        var two_days_ago = new Date();
+        two_days_ago = two_days_ago.getFullYear() + "-" +
+            (two_days_ago.getMonth() + 1) + "-" +
+            (two_days_ago.getDate() - 2);
+
+        var start_date = remove_date_padding(padded_start_date);
+        var end_date = remove_date_padding(padded_end_date);
+
+        var sir_data = get_sirs_between_dates(pop, dataset, start_date, two_days_ago);
 
         var prediction = make_prediction(sir_data, 500, 3);
 
-        console.log(prediction);
-
-        var chart = make_chart(prediction, "infected", "red");
-
-        console.log(prediction);
+        var chart = make_chart(prediction);
 
         var lineChart = new Chart(ctx, chart);
 
+        document.getElementById("start-date").addEventListener("change", function(){
+            location.reload();
+        });
+
+        document.getElementById("end-date").addEventListener("change", function(){
+            location.reload();
+        });
     }
     catch (error) {}
 }
@@ -286,10 +322,12 @@ async function updateHTML() {
 module.exports = {
     url_to_covid_data, url_to_population_data, url_to_json,
     get_sir_from_index, get_population, get_index_of_date,
-    make_chart, get_sirs_between_dates, get_start_and_end_date, make_prediction
+    make_chart, get_sirs_between_dates, get_start_and_end_date, 
+    make_prediction, remove_date_padding
 
 }
 
-
 updateHTML();
+
+
 

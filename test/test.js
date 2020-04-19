@@ -298,9 +298,19 @@ describe("make_chart", function() {
         data: {
             labels: ["2020-1-22", "2020-1-23", "2020-1-24"],
             datasets: [{
-                label: "",
-                borderColor: "",
-                data: [-1,-1,-1]
+                label: "susceptible",
+                borderColor: "green",
+                data: [100, 90, 70]
+            },
+            {
+                label: "infected",
+                borderColor: "red",
+                data: [10, 20, 30]
+            },
+            {
+                label: "removed",
+                borderColor: "blue",
+                data: [1,1,11]
             }]
         },
         options: {
@@ -308,7 +318,7 @@ describe("make_chart", function() {
             maintainAspectRatio: true,
             legend: {
                 labels: {
-                    fontColor: ""
+                    fontColor: "white"
                 }
             },
             scales: {
@@ -326,58 +336,30 @@ describe("make_chart", function() {
         }    
     };
 
-    // Must be called after tests where line_chart is changed.
-    function reset_line_chart() {
-        line_chart.data.datasets[0].label = "";
-        line_chart.data.datasets[0].borderColor = "";
-        line_chart.data.datasets[0].data  = [-1,-1,-1];
-        line_chart.options.legend.labels.fontColor = "";
-    }
-
     it("return an object", function() {
-        const chart = main.make_chart(sir_data, "susceptible", "blue");
+        const chart = main.make_chart(sir_data);
         expect(chart).to.be.an('object');
     });
 
-    it("return null if non-existent category is called", function() {
-        const chart = main.make_chart(sir_data, "chinese", "blue");
-        expect(chart).to.be.a('null');
-    });
+    it("return line chart of SIR data", function() {
+        const s_color = "green";
+        const i_color = "red";
+        const r_color = "blue";
+        const chart = main.make_chart(sir_data);
 
-    it("return null if non-existent color is called", function() {
-        const chart = main.make_chart(sir_data, "susceptible", "grue");
-        expect(chart).to.be.a('null');
-    });
-
-    it("return line chart of susceptible", function() {
-        const color = "blue";
-        const chart = main.make_chart(sir_data, "susceptible", color);
         line_chart.data.datasets[0].label = "susceptible";
-        line_chart.data.datasets[0].borderColor = color;
+        line_chart.data.datasets[0].borderColor = s_color;
         line_chart.data.datasets[0].data = [100, 90, 70];
-        line_chart.options.legend.labels.fontColor = color;
+
+        line_chart.data.datasets[1].label = "infected";
+        line_chart.data.datasets[1].borderColor = i_color;
+        line_chart.data.datasets[1].data = [10, 20, 30];
+
+        line_chart.data.datasets[2].label = "removed";
+        line_chart.data.datasets[2].borderColor = r_color;
+        line_chart.data.datasets[2].data = [1,1,11];
+
         expect(line_chart).to.deep.equal(chart);
-        reset_line_chart();
-    });
-    it("return line chart of infected", function() {
-        const color = "red";
-        const chart = main.make_chart(sir_data, "infected", color);
-        line_chart.data.datasets[0].label = "infected";
-        line_chart.data.datasets[0].borderColor = color;
-        line_chart.data.datasets[0].data = [10, 20, 30];
-        line_chart.options.legend.labels.fontColor = color;
-        expect(line_chart).to.deep.equal(chart);
-        reset_line_chart();
-    });
-    it("return line chart of removed", function() {
-        const color = "green";
-        const chart = main.make_chart(sir_data, "removed", color);
-        line_chart.data.datasets[0].label = "removed";
-        line_chart.data.datasets[0].borderColor = color;
-        line_chart.data.datasets[0].data = [1,1,11];
-        line_chart.options.legend.labels.fontColor = color;
-        expect(line_chart).to.deep.equal(chart);
-        reset_line_chart();
     });
 });
 
@@ -400,4 +382,23 @@ describe("make_prediction", function() {
         expect(prediction).to.be.an("array");
         expect(prediction.length).to.be.equal(13);
     });
+});
+
+describe("remove_date_padding", function() {
+
+    var padded_date = "2020-03-01";
+    var unpadded_date = "2020-3-1";
+
+    var early_padded_date = "1990-01-01";
+
+    it("return valid unpadded date from valid padded date", function() {
+        var date = main.remove_date_padding(padded_date);
+        expect(date).to.be.equal(unpadded_date);
+    });
+
+    it("return date of first data if date is too early", function() {
+        var date = main.remove_date_padding(early_padded_date);
+        expect(date).to.be.equal("2020-1-22");
+    });
+
 });
