@@ -460,3 +460,24 @@ describe("days_between_dates", function() {
     });
 
 });
+
+describe("get_max_infected", function() {
+
+    const sir_data = [
+        ["2020-1-22", 100,10,1],
+        ["2020-1-23", 90,20,1],
+        ["2020-1-24", 70,30,11],
+        ["2020-1-25", 70,25,16]
+    ];
+
+    it("return correct number", function() {
+        var result = main.get_max_infected(sir_data);
+        expect(result).to.be.equal(30);
+    });
+
+    it("return null if input is null", function() {
+        var result = main.get_max_infected(null);
+        expect(result).to.be.equal(null);
+    });    
+});
+
