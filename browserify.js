@@ -359,15 +359,12 @@ function get_max_infected(sir_data) {
     var max_infected = 0;
 
     var extra_days = 365;
-    console.log("test");
     var prediction = make_prediction(sir_data, extra_days, 30);
-    console.log("test");
     var i;
 
     for (i = 0; i < prediction.length; i++) {
         if (prediction[i][2] > max_infected) {
             max_infected = prediction[i][2];
-            console.log(max_infected);
         }
     }
 
@@ -400,13 +397,15 @@ async function updateHTML() {
         document.getElementById("start-date").value = pad_date(dates[0]);
         document.getElementById("end-date").value   = pad_date(dates[1]);
         save_dates();
-        
+
         var two_days_ago = new Date();
         two_days_ago = two_days_ago.getFullYear() + "-" +
             (two_days_ago.getMonth() + 1) + "-" +
             (two_days_ago.getDate() - 2);
 
         var sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
+        document.getElementById("max_infected").innerHTML = get_max_infected(sir_data);
+        sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
         var prediction = make_prediction(sir_data, 7, 5);
         var chart = make_chart(prediction);
         var lineChart = new Chart(ctx, chart);
@@ -438,7 +437,6 @@ async function updateHTML() {
                     var extra_days = days_between_dates(two_days_ago, end_date);
                     prediction = make_prediction(sir_data, extra_days, 30);
                 }
-                
 
                 chart = make_chart(prediction);
                 lineChart = new Chart(ctx, chart);
