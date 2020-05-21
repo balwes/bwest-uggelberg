@@ -413,7 +413,7 @@ async function updateHTML() {
                 else { 
                     sir_data = get_sirs_between_dates(pop, dataset, start_date, two_days_ago);
                     var extra_days = days_between_dates(two_days_ago, end_date);
-                    prediction = make_prediction(sir_data, extra_days, 5);
+                    prediction = make_prediction(sir_data, extra_days, 30);
                 }
                 
 
