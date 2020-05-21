@@ -8,6 +8,7 @@ webpage of this repo here: https://bwest-uggelberg.github.io/covid19/
 
 ### Testing
 `npm test` runs the test suite.
+Code coverage is included at the end of the output.
 
 ### Running the website locally
 Set up a local HTTP server, we use http-server:
@@ -36,7 +37,9 @@ assertion library used in the same file. Assertions performed
 in a test case are used by Mocha to pass or fail the test.
 Both of these tools are useful because the project uses
 test-driven development, where the workflow is dependent on
-a solid framework for testing.
+a solid framework for testing. **Nyc** (the command line
+interface of Istanbul) is used to add code coverage info after
+running the test suite.
 
 **Node-fetch** brings the JavaScript function window.fetch
 to Node.js. The function is used to download COVID-19 and
