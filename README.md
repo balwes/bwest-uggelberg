@@ -49,3 +49,16 @@ the browser.
 
 **Chart.js** is a library used to visualize our data and
 prediction in an interactive and pretty graph.
+
+### Architecture
+| File | Purpose |
+|:-----|:--------|
+| script.js | The Node.js source code. The bundle of this file is imported by the browser and provides functionality to the webpage. |
+| index.html | The HTML file that makes up the webpage. It imports JS and CSS files and contains information about the webpage. |
+| browserify.js | A bundle of script.js and the modules it references |
+| package.json | Metadata (e.g. dependencies) of the Node.js project |
+| package-lock.json | Contains a complete dependency tree based on package.json. Ensures that installations of this project will behave the same for everyone. |
+| .travis.yml | A configuration file used by Travis CI |
+| test/ | Contains the test file |
+| css/ | Contains CSS files for styling of the webpage |
+| fonts/ | Contains custom fonts used by the webpage |
