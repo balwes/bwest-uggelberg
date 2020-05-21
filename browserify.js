@@ -311,9 +311,9 @@ function make_prediction(sir_data, extra_days, past_days) {
         var iprev = prediction[i][2];
         var rprev = prediction[i][3];
         prediction.push([addDays(last_sir_date, (i-last_sir_index)+1),
-            s_change(b,sprev,iprev),
-            i_change(g, b, sprev,iprev,rprev),
-            r_change(g,iprev,rprev)]);
+            Math.floor(s_change(b,sprev,iprev)),
+            Math.floor(i_change(g, b, sprev,iprev,rprev)),
+            Math.floor(r_change(g,iprev,rprev))]);
     }
 
     return prediction;
@@ -349,6 +349,29 @@ function addDays(date, days) {
     result = result.getFullYear() + "-" + 
     (result.getMonth()+1) + "-" + (result.getDate());    
     return result;
+}
+
+function get_max_infected(sir_data) {
+    if(sir_data == null) {
+        return null;
+    }
+
+    var max_infected = 0;
+
+    var extra_days = 365;
+    console.log("test");
+    var prediction = make_prediction(sir_data, extra_days, 30);
+    console.log("test");
+    var i;
+
+    for (i = 0; i < prediction.length; i++) {
+        if (prediction[i][2] > max_infected) {
+            max_infected = prediction[i][2];
+            console.log(max_infected);
+        }
+    }
+
+    return max_infected;
 }
 
 async function updateHTML() {
@@ -430,7 +453,7 @@ module.exports = {
     get_sir_from_index, get_population, get_index_of_date,
     make_chart, get_sirs_between_dates, get_start_and_end_date, 
     make_prediction, remove_date_padding, pad_date, 
-    days_between_dates
+    days_between_dates, get_max_infected
 }
 
 updateHTML();
