@@ -1,7 +1,7 @@
 ## Modeling COVID-19 spread
 This project models and presents the COVID-19 spread in Sweden.
 It can also (primitively) predict future spread. View the
-webpage at this link: https://bwest-uggelberg.github.io/covid19/
+webpage of this repo here: https://bwest-uggelberg.github.io/covid19/
 
 ### Tools
 **Mocha** provides the testing framework used in test/test.js
