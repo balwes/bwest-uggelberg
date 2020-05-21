@@ -284,9 +284,9 @@ function make_prediction(sir_data, extra_days, past_days) {
         var iprev = prediction[i][2];
         var rprev = prediction[i][3];
         prediction.push([addDays(last_sir_date, (i-last_sir_index)+1),
-            s_change(b,sprev,iprev),
-            i_change(g, b, sprev,iprev,rprev),
-            r_change(g,iprev,rprev)]);
+            Math.floor(s_change(b,sprev,iprev)),
+            Math.floor(i_change(g, b, sprev,iprev,rprev)),
+            Math.floor(r_change(g,iprev,rprev))]);
     }
 
     return prediction;
@@ -324,6 +324,26 @@ function addDays(date, days) {
     return result;
 }
 
+function get_max_infected(sir_data) {
+    if(sir_data == null) {
+        return null;
+    }
+
+    var max_infected = 0;
+
+    var extra_days = 365;
+    var prediction = make_prediction(sir_data, extra_days, 30);
+    var i;
+
+    for (i = 0; i < prediction.length; i++) {
+        if (prediction[i][2] > max_infected) {
+            max_infected = prediction[i][2];
+        }
+    }
+
+    return max_infected;
+}
+
 async function updateHTML() {
     var previous_start_date;
     var previous_end_date;
@@ -350,13 +370,15 @@ async function updateHTML() {
         document.getElementById("start-date").value = pad_date(dates[0]);
         document.getElementById("end-date").value   = pad_date(dates[1]);
         save_dates();
-        
+
         var two_days_ago = new Date();
         two_days_ago = two_days_ago.getFullYear() + "-" +
             (two_days_ago.getMonth() + 1) + "-" +
             (two_days_ago.getDate() - 2);
 
         var sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
+        document.getElementById("max_infected").innerHTML = get_max_infected(sir_data);
+        sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
         var prediction = make_prediction(sir_data, 7, 5);
         var chart = make_chart(prediction);
         var lineChart = new Chart(ctx, chart);
@@ -386,9 +408,8 @@ async function updateHTML() {
                 else { 
                     sir_data = get_sirs_between_dates(pop, dataset, start_date, two_days_ago);
                     var extra_days = days_between_dates(two_days_ago, end_date);
-                    prediction = make_prediction(sir_data, extra_days, 5);
+                    prediction = make_prediction(sir_data, extra_days, 30);
                 }
-                
 
                 chart = make_chart(prediction);
                 lineChart = new Chart(ctx, chart);
@@ -403,7 +424,7 @@ module.exports = {
     get_sir_from_index, get_population, get_index_of_date,
     make_chart, get_sirs_between_dates, get_start_and_end_date, 
     make_prediction, remove_date_padding, pad_date, 
-    days_between_dates
+    days_between_dates, get_max_infected
 }
 
 updateHTML();

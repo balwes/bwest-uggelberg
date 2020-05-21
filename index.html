@@ -33,6 +33,9 @@
   					<input type="date" class="date-input form-control" id="end-date">
   					<button type="button" class="btn datebtn" id="date-button">Send</button>
 				</div>
+				<h1 class="smaller">Max Infected</h1>
+				<p>If current trends continue the total number of simultaneously infected individuals will be: </p>
+				<p id="max_infected">0</p>
 				<p>The graph visualizes the spread of COVID-19 in Sweden. Use the buttons above the graph to show/hide lines. Use the date inputs to view specific time frames. You can see the predicted spread by giving an end date in the future (this feature is primitive, read "Details" for an elaboration).</p>
 				<h1 class="smaller">Details</h1>
 				<p>The data displayed in this graph follows the SIR model. SIR categorizes humans as either (1) Suspectible, those who can be infected, (2) Infected, those who are infected and can infect others, and (3) Removed, those who have had the disease. Note that "removed" also includes deceased individuals. Prediction is performed when the end date is in the future. It is based on data from the previous few days, check the source code on GitHub for more.</p>
