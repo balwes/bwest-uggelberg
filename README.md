@@ -1,4 +1,6 @@
 ## Modeling COVID-19 spread
+[![Coverage Status](https://coveralls.io/repos/github/bwest-uggelberg/covid19/badge.svg?branch=master)](https://coveralls.io/github/bwest-uggelberg/covid19?branch=master)
+
 This project models and presents the COVID-19 spread in Sweden.
 It can also (primitively) predict future spread. View the
 webpage of this repo here: https://bwest-uggelberg.github.io/covid19/
