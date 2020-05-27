@@ -33,11 +33,17 @@
   					<input type="date" class="date-input form-control" id="end-date">
   					<button type="button" class="btn datebtn" id="date-button">Send</button>
 				</div>
-				<p>The graph visualizes the spread of COVID-19 in Sweden. Use the buttons above the graph to show/hide lines. Use the date inputs to view specific time frames. You can see the predicted spread by giving an end date in the future (this feature is primitive, read "Details" for an elaboration).</p>
-				<h1 class="smaller">Details</h1>
-				<p>The data displayed in this graph follows the SIR model. SIR categorizes humans as either (1) Suspectible, those who can be infected, (2) Infected, those who are infected and can infect others, and (3) Removed, those who have had the disease. Note that "removed" also includes deceased individuals. Prediction is performed when the end date is in the future. It is based on data from the previous few days, check the source code on GitHub for more.</p>
+				<h1 class="smaller">Max Infected</h1>
+				<p>If current trends continue the total number of simultaneously infected individuals will be: </p>
+				<p id="max_infected">0</p>
+				<h1 class="smaller">General Information</h1>
+				<p>The graph visualizes the spread of COVID-19 in Sweden. Use the buttons above the graph to show/hide lines. Use the date inputs to view specific time frames.</p>
+				<p>The data displayed in this graph follows the SIR model. SIR categorizes humans as either (1) Suspectible, those who can be infected, (2) Infected, those who are infected and can infect others, and (3) Removed, those who have had the disease. Note that "removed" also includes deceased individuals.</p>
+				<h1 class="smaller">Prediction</h1>
+				<p>To predict future numbers we use the data from the previous month and take the average rate of change between the days. This tweaks the variables of infection rate and removal rate. The rates at which people are getting infected or stop being infected (either by dying or recovering). Naturally, if people are getting infected faster than getting removed then the number of infected people will grow and vice versa. If you've ever heard about "flattening the curve", the red line on this page (showcasing the number of simultaneously infected individuals) is that curve.</p>
 				<h1 class="smaller">Limitations</h1>
-				<p>This website was made for a course in computer science and is not a substitute for information from health organizations. Please view this page as an introduction to SIR modeling using COVID-19 data. Keep in mind that models are a simplification of reality. For example, all predictions on this page do not take preventative measures into account. Because of this, the graph becomes less accurate the longer it attempts to predict.</p>
+				<p>This website was made for a course in computer science and is not a substitute for information from health organizations. Please view this page as an introduction to SIR modeling using COVID-19 data. Keep in mind that models are a simplification of reality. The data used is also far from optimal. Since Sweden (at least as of writing) does not conduct a lot of tests the data on which the prediction is based is flawed.</p>
+				<p>We'd like to note that Swedish statistics, specifically, might make the graph look a bit strange. As of writing this it seems that people are not declared as recovered at a steady pace but rather in batches. This makes the graph look jagged. Also, it might make the graph more pessimistic.</p>
 			</div>
 		</section>
 
