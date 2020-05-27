@@ -39,9 +39,13 @@ assertion library used in the same file. Assertions performed
 in a test case are used by Mocha to pass or fail the test.
 Both of these tools are useful because the project uses
 test-driven development, where the workflow is dependent on
-a solid framework for testing. **Nyc** (the command line
-interface of Istanbul) is used to add code coverage info after
-running the test suite.
+a solid framework for testing.
+
+**Nyc** (the command line interface of Istanbul) adds code coverage
+info after running the test suite. The info is received by
+**Coveralls** which is a web service that tracks coverage over time.
+The badge at the top of this readme is updated according to the
+latest coverage report.
 
 **Node-fetch** brings the JavaScript function window.fetch
 to Node.js. The function is used to download COVID-19 and
