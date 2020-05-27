@@ -32,6 +32,16 @@ install browserify and uniq:
 
 And run `browserify script.js -o browserify.js` after each change.
 
+### Test-Driven Development
+This project uses a TDD workflow. The following structure was followed when adding features:
+1. Open up an issue for a desired feature
+2. Create a branch for it
+3. Add tests. These should fail because the feature has not yet been implemented.
+4. Add code until all tests pass
+5. Refactor if needed
+6. Create a pull request of the branch. If accepted, close the relevant issue. If not, improve the tests and implementation and try again.
+7. Repeat
+
 ### Tools
 **Mocha** provides the testing framework used in test/test.js
 and is used to run tests and report the results. **Chai** is an
@@ -39,9 +49,13 @@ assertion library used in the same file. Assertions performed
 in a test case are used by Mocha to pass or fail the test.
 Both of these tools are useful because the project uses
 test-driven development, where the workflow is dependent on
-a solid framework for testing. **Nyc** (the command line
-interface of Istanbul) is used to add code coverage info after
-running the test suite.
+a solid framework for testing.
+
+**Nyc** (the command line interface of Istanbul) adds code coverage
+info after running the test suite. The info is received by
+**Coveralls** which is a web service that tracks coverage over time.
+The badge at the top of this readme is updated according to the
+latest coverage report.
 
 **Node-fetch** brings the JavaScript function window.fetch
 to Node.js. The function is used to download COVID-19 and
