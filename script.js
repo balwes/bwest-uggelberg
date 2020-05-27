@@ -193,6 +193,7 @@ function make_chart(sir_data) {
             },
             {
                 label: "removed",
+                hidden: true,
                 borderColor: "blue", 
                 data: r_data
             }]
@@ -368,7 +369,7 @@ async function updateHTML() {
 
         var dates = get_start_and_end_date(dataset);
         document.getElementById("start-date").value = pad_date(dates[0]);
-        document.getElementById("end-date").value   = pad_date(dates[1]);
+        document.getElementById("end-date").value   = pad_date(addDays(dates[1], 29));
         save_dates();
 
         var two_days_ago = new Date();
@@ -379,7 +380,7 @@ async function updateHTML() {
         var sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
         document.getElementById("max_infected").innerHTML = get_max_infected(sir_data);
         sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
-        var prediction = make_prediction(sir_data, 7, 5);
+        var prediction = make_prediction(sir_data, 30, 30);
         var chart = make_chart(prediction);
         var lineChart = new Chart(ctx, chart);
 
