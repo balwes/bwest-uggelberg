@@ -312,6 +312,7 @@ describe("make_chart", function() {
             },
             {
                 label: "removed",
+                hidden: true,
                 borderColor: "blue",
                 data: [1,1,11]
             }]
