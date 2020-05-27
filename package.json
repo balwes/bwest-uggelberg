@@ -7,8 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "nyc mocha",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "mocha": "_mocha -b -R spec",
+    "test": "nyc npm run mocha",
+    "coverage": "npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,8 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "coveralls": "^3.1.0",
-    "mocha": "^7.1.1",
+    "mocha": "^7.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^15.0.1"
   },
   "dependencies": {
