@@ -405,7 +405,9 @@ async function updateHTML() {
             (two_days_ago.getDate() - 2);
 
         var sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
-        document.getElementById("max_infected").innerHTML = get_max_infected(sir_data);
+        var max_infected = get_max_infected(sir_data);
+        var infected_line = "If current trends continue the maximum number of simultaneously infected individuals will be: ";
+        document.getElementById("max_infected").innerHTML = infected_line + max_infected;
         sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
         var prediction = make_prediction(sir_data, 30, 30);
         var chart = make_chart(prediction);
