@@ -400,10 +400,8 @@ async function updateHTML() {
         save_dates();
 
         var two_days_ago = new Date();
-        two_days_ago = two_days_ago.getFullYear() + "-" +
-            (two_days_ago.getMonth() + 1) + "-" +
-            (two_days_ago.getDate() - 2);
-
+        two_days_ago = addDays(two_days_ago, -2);
+        
         var sir_data = get_sirs_between_dates(pop, dataset, dates[0], two_days_ago);
         var max_infected = get_max_infected(sir_data);
         var infected_line = "If current trends continue the maximum number of simultaneously infected individuals will be: ";
